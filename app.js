@@ -81,6 +81,10 @@ app.get('/', (req, res) => {
   // }
 });
 
+app.get('/about', (req, res) => {
+    res.render('about');
+});
+
 //
 // A generic route that expects a user name in the request URL
 // We search for it using team.one() in this single route
