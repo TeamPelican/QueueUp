@@ -1,3 +1,5 @@
-html {
+body {
+    padding-left: 20px;
+    padding-right: 20px;
     background-color: #1ED760;
 }
