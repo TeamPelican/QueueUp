@@ -1,0 +1,26 @@
+{
+  "name": "queueup",
+  "description": "Your streaming media dashboard.",
+  "main": "app.js",
+  "authors": [
+    "Team Pelican"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "express",
+    "awesome"
+  ],
+  "homepage": "https://github.com/TeamPelican/QueueUp",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
