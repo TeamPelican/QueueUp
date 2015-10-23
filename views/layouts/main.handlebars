@@ -41,32 +41,32 @@
 	<div class="container">
 		<div class="main-content">
 
-		{{{body}}}
+			{{{body}}}
 
-		{{#if showTests}}
-		<div id="mocha"></div>
-		<script src="/vendor/mocha.js"></script>
-		<script src="/vendor/chai.js"></script>
-		<script>
-		mocha.ui('tdd');
-		var assert = chai.assert;
-		</script>
+			{{#if showTests}}
+			<div id="mocha"></div>
+			<script src="/vendor/mocha.js"></script>
+			<script src="/vendor/chai.js"></script>
+			<script>
+			mocha.ui('tdd');
+			var assert = chai.assert;
+			</script>
 
-		<script src="/qa/tests-global.js"></script>
-		{{#if pageTestScript}}
-		<script src="{{pageTestScript}}"></script>
-		{{/if}}
-		<script>mocha.run();</script>
-		{{/if}}
+			<script src="/qa/tests-global.js"></script>
+			{{#if pageTestScript}}
+			<script src="{{pageTestScript}}"></script>
+			{{/if}}
+			<script>mocha.run();</script>
+			{{/if}}
+		</div>
 	</div>
-</div>
-<footer class="footer">
-	<div class="container">
-		<a href="/about">About</a>
-		<a href="/team">Team</a>
-		<a href="#">Help</a>
-		<a href="#">Contact Us</a>
-	</div>
-</footer>
+	<footer class="footer">
+		<div class="container">
+			<a href="/about">About</a>
+			<a href="/team">Team</a>
+			<a href="#">Help</a>
+			<a href="#">Contact Us</a>
+		</div>
+	</footer>
 </body>
 </html>
