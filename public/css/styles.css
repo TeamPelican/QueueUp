@@ -9,6 +9,12 @@ body > .container {
 .main-content {
     padding: 40px 15px;
 }
+#nav-logo {
+    padding: 0px;
+}
+#nav-logo img {
+    max-height: 50px;
+}
 .navbar {
     border: 0px;
     background-color: #000000;
