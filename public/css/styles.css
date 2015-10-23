@@ -21,6 +21,20 @@ body > .container {
     padding-top: 7px;
     padding-bottom: 7px;
 }
+.logo-title-lg h1 {
+    font-size: 65pt;
+}
+.logo-title-lg img {
+    width: 140px;
+    height: 140px;
+}
+.logo-title-md h1 {
+    font-size: 45pt;
+}
+.logo-title-md img {
+    width: 120px;
+    height: 120px;
+}
 .navbar {
     font-size: 15px;
     border: 0px;
