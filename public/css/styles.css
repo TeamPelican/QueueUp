@@ -10,7 +10,7 @@ body {
 body > .container {
     color: white;
 }
-.main-content {
+#main-content {
     padding: 40px 15px;
 }
 #nav-logo {
@@ -36,6 +36,8 @@ body > .container {
   position: absolute;
   bottom: 0;
   width: 100%;
+  padding-top: 10px;
+  border-top: 1px solid white;
   /* Set the fixed height of the footer here */
   height: 40px;
 }

@@ -38,27 +38,24 @@
 			</div><!--/.nav-collapse -->
 		</div>
 	</nav>
-	<div class="container">
-		<div class="main-content">
+	<div id="main-content" class="container">
+		{{{body}}}
 
-			{{{body}}}
+		{{#if showTests}}
+		<div id="mocha"></div>
+		<script src="/vendor/mocha.js"></script>
+		<script src="/vendor/chai.js"></script>
+		<script>
+		mocha.ui('tdd');
+		var assert = chai.assert;
+		</script>
 
-			{{#if showTests}}
-			<div id="mocha"></div>
-			<script src="/vendor/mocha.js"></script>
-			<script src="/vendor/chai.js"></script>
-			<script>
-			mocha.ui('tdd');
-			var assert = chai.assert;
-			</script>
-
-			<script src="/qa/tests-global.js"></script>
-			{{#if pageTestScript}}
-			<script src="{{pageTestScript}}"></script>
-			{{/if}}
-			<script>mocha.run();</script>
-			{{/if}}
-		</div>
+		<script src="/qa/tests-global.js"></script>
+		{{#if pageTestScript}}
+		<script src="{{pageTestScript}}"></script>
+		{{/if}}
+		<script>mocha.run();</script>
+		{{/if}}
 	</div>
 	<footer class="footer">
 		<div class="container">
