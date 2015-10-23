@@ -1,0 +1,25 @@
+{
+	"nfuller" : {
+		"about" : "Nathan will be working on both aspects of the web application. That is, the front end and  the back end. Because he has experience using Angular JS, a front-end framework, some of his research will include determining whether Angular is a feasible framework for the team to work with in terms of learnability and time constraints. Nathan will also be responsible for researching possibilities to have the website be available on a publicly accessible URL (most likely through free use of Heroku or GitHub)."
+	},
+
+	"dlazier" : {
+		"about" : "Dan has demonstrated that he has no preference for which area of the application he will work on. Because he has experience working with interface design, he will likely be involved in the decision of which front end framework (Angular, jQuery, etc.) and styling libraries (Bootstrap, Foundation, etc.) QueueUp will make use of.\n Dan also has experience managing relational databases and integrating databases into web apps. After performing research on a NoSQL database like MongoDB, he may decide to contribute to the creation of the schemas that make up how data is observed in QueueUp."
+	},
+
+	"abradley" : {
+		"about" : "Adam has demonstrated that he has no preference for which area of the application he will work on. He mentioned that he has strong object-oriented programming experience, so this might transfer well to creating schemas for the backend. In the coming weeks, Adam will research technologies that may go into creation of QueueUp, including MongoDB, Node, and Express. After he has completed research, he will update the team with his preferred role."
+	},
+
+	"cgiang" : {
+		"about" : "Co will be working mainly with the front end of the web application. He will be researching use of front end frameworks to assist with data binding, as well as ways to make the user interface appear as fluid as possible to provide a pleasurable user experience."
+	},
+
+	"zhili" : {
+		"about" : "Zhi will be working mainly with the backend implementation, using technologies including MongoDB, Node, and Express. He will be performing research on MongoDB, Node, and Express. We have already covered a lot about Node and Express with recent lecture material, so the bulk of his upcoming research will include how to integrate MongoDB with a Node application."
+	},
+
+	"kfarr" : {
+		"about" : "Kevin will be working mainly with the backend implementation, using technologies including MongoDB, Node, and Express. Because Kevin demonstrated that he also has front experience, he may be able aid in hooking up the back end to the front end.\n He will be performing research on MongoDB, Node, and Express. We have already covered a lot about Node and Express with recent lecture material, so the bulk of his upcoming research will include how to integrate MongoDB with a Node application."
+	}
+}
