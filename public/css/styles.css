@@ -1,3 +1,7 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
 body {
     padding-top: 55px; /* use in order to pad main content below nav-bar */
     margin-bottom: 60px; /* use for footer */
