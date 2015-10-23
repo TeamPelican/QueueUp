@@ -65,7 +65,8 @@ app.get('/team', (req, res) => {
     }
 });
 
-app.get('/mockups', (req,res) => {
+// BEGIN MOCKUP ROUTES
+app.get('/:var(mockups|mockups/splash)',(req,res) => {
     res.render('mockups', {
         title: 'Splash Page',
         image: '/img/mockups/splash.png'
