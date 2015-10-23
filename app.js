@@ -65,6 +65,49 @@ app.get('/team', (req, res) => {
     }
 });
 
+app.get('/mockups', (req,res) => {
+    res.render('mockups', {
+        title: 'Splash Page',
+        image: '/img/mockups/splash.png'
+    });
+});
+
+app.get('/mockups/login', (req,res) => {
+    res.render('mockups', {
+        title: 'Login Page',
+        image: '/img/mockups/login.png'
+    });
+});
+
+app.get('/mockups/main', (req,res) => {
+    res.render('mockups', {
+        title: 'Main Page (Logged in)',
+        image: '/img/mockups/main.png'
+    });
+});
+
+app.get('/mockups/queue', (req,res) => {
+    res.render('mockups', {
+        title: 'Manage Queue/Advanced',
+        image: '/img/mockups/queue.png'
+    });
+});
+
+app.get('/mockups/userprofile', (req,res) => {
+    res.render('mockups', {
+        title: 'User Profile',
+        image: '/img/mockups/userprofile.png'
+    });
+});
+
+app.get('/mockups/admin', (req,res) => {
+    res.render('mockups', {
+        title: 'Admin Console',
+        image: '/img/mockups/admin.png'
+    });
+});
+
+
 
 //////////////////////////////////////////////////////////////////////
 ///// Error Middleware ///////////////////////////////////////////////
