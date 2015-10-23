@@ -14,12 +14,13 @@ body > .container {
 }
 #nav-logo img {
     max-height: 50px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 .navbar {
+    font-size: 15px;
     border: 0px;
-    background-color: #000000;
+    background-color: #343434;
 }
 .nav-color {
     color: white !important;
