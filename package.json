@@ -24,6 +24,7 @@
   "dependencies": {
     "bower": "^1.6.3",
     "express": "^4.13.3",
-    "express-handlebars": "^2.0.1"
+    "express-handlebars": "^2.0.1",
+    "mongodb": "^2.0.46"
   }
 }
