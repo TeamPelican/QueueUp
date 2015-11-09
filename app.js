@@ -3,6 +3,7 @@
 // (2) handlebars - this provides the handlebars templating framework
 var express    = require('express');
 var handlebars = require('express-handlebars');
+var morgan = require('morgan');
 
 //////////////////////////////////////////////////////////////////////
 ///// Express App Setup //////////////////////////////////////////////
@@ -28,87 +29,15 @@ function testmw(req, res, next) {
 // This adds our testing middleware to the express app.
 app.use(testmw);
 
+// Morgan Logging Support.
+// Using 'conbined' gives you Apache-style logging support.
+app.use(morgan('combined'));
+
 //////////////////////////////////////////////////////////////////////
 ///// User Defined Routes ////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-var team = require('./lib/team.js');
-
-app.get('/', (req, res) => {
-    res.render('splash');
-});
-
-app.get('/about', (req, res) => {
-    res.render('about');
-});
-
-//
-// A generic route that expects a user name with the 'user' querystring.
-// We search for it using team.one() in this single route
-// instead of creating multiple specific routes. This approach
-// might be preferred if we were to add/remove users.
-//
-app.get('/team', (req, res) => {
-    var result;
-    // render a specific member's info if ?member exists
-    if (req.query.user)
-        result = team.one(req.query.user);
-    else
-        result = team.all();
-    if (!result.success) {
-        notFound404(req, res);
-    } else {
-        res.render('team', {
-            members: result.data,
-            pageTestScript: '/qa/tests-team.js'
-        });
-    }
-});
-
-// BEGIN MOCKUP ROUTES
-app.get('/:var(mockups|mockups/splash)',(req,res) => {
-    res.render('mockups', {
-        title: 'Splash Page',
-        image: '/img/mockups/splash.png'
-    });
-});
-
-app.get('/mockups/login', (req,res) => {
-    res.render('mockups', {
-        title: 'Login Page',
-        image: '/img/mockups/login.png'
-    });
-});
-
-app.get('/mockups/main', (req,res) => {
-    res.render('mockups', {
-        title: 'Main Page (Logged in)',
-        image: '/img/mockups/main.png'
-    });
-});
-
-app.get('/mockups/queue', (req,res) => {
-    res.render('mockups', {
-        title: 'Manage Queue/Advanced',
-        image: '/img/mockups/queue.png'
-    });
-});
-
-app.get('/mockups/userprofile', (req,res) => {
-    res.render('mockups', {
-        title: 'User Profile',
-        image: '/img/mockups/userprofile.png'
-    });
-});
-
-app.get('/mockups/admin', (req,res) => {
-    res.render('mockups', {
-        title: 'Admin Console',
-        image: '/img/mockups/admin.png'
-    });
-});
-
-
+app.use('/', require('./routes/index'));
 
 //////////////////////////////////////////////////////////////////////
 ///// Error Middleware ///////////////////////////////////////////////
