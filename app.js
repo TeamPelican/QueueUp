@@ -1,9 +1,10 @@
 // This requires the necessary libraries for the webapp.
-// (1) express - this provides the express web framework
-// (2) handlebars - this provides the handlebars templating framework
 var express    = require('express');
 var handlebars = require('express-handlebars');
+var session = require('express-session');
+var flash = require('connect-flash');
 var morgan = require('morgan');
+
 
 //////////////////////////////////////////////////////////////////////
 ///// Express App Setup //////////////////////////////////////////////
@@ -13,25 +14,40 @@ var app = express();
 
 app.set('port', process.env.PORT || 3000);
 
+//// Start Middleware Setup
+// View Engine:
 var view = handlebars.create({ defaultLayout: 'main' });
 app.engine('handlebars', view.engine);
 app.set('view engine', 'handlebars');
 
+// Static File Serving
 app.use(express.static(__dirname + '/public'));
 
+// Test Middleware that we might not even need right now...
 function testmw(req, res, next) {
     res.locals.showTests = app.get('env') !== 'production' &&
     req.query.test;
     // Passes the request to the next route handler.
     next();
 }
-
 // This adds our testing middleware to the express app.
 app.use(testmw);
 
+app.use(session({
+    secret: 'notmuchofasecret',
+    saveUninitialized: false, // doesn't save uninitialized session
+    resave: false // doesn't save session if not modified
+}));
+
+// Flash Support.
+app.use(flash());
+
 // Morgan Logging Support.
-// Using 'conbined' gives you Apache-style logging support.
-app.use(morgan('combined'));
+// Using 'combined' gives you Apache-style logging support.
+// 'tiny' provides minimal output.
+app.use(morgan('tiny'));
+
+//// End Middleware Setup
 
 //////////////////////////////////////////////////////////////////////
 ///// User Defined Routes ////////////////////////////////////////////
