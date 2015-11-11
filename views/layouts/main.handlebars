@@ -13,6 +13,15 @@
 	to manipulate HTML in the browser. -->
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/styles.css">
+
+	<!-- Conditional CSS/JS for subtemplates here -->
+	{{#if view_splash}}
+	<link rel="stylesheet" href="/css/splash.css">
+	{{/if}} {{#if view_about}}
+	<link rel="stylesheet" href="/css/about.css">
+	{{/if}}
+	<!-- End conditional CSS/JSS -->
+
 	<link rel='shortcut icon' href="/img/favicon.png">
 	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>

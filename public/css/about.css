@@ -1,0 +1,15 @@
+#main-content {
+    max-width: 730px;
+}
+#main-content div {
+    width: 100%;
+}
+#title h1{
+    font-size: 34pt;
+}
+.logo-title-md {
+    text-align: center;
+}
+ul li{
+    list-style-type: none;
+}
