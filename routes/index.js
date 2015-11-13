@@ -5,10 +5,17 @@ var team = require('../lib/team.js');
 var router = express.Router();
 
 router.get('/', (req, res) => {
+    res.locals.view_splash = true; // for template specific css/js
     res.render('splash');
 });
 
+router.get('/login', (req, res) => {
+    res.locals.view_login = true; // for template specific css/js
+    res.render('login');
+});
+
 router.get('/about', (req, res) => {
+    res.locals.view_about = true; // for template specific css/js
     res.render('about');
 });
 

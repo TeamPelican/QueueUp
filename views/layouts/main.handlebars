@@ -13,6 +13,17 @@
 	to manipulate HTML in the browser. -->
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/styles.css">
+
+	<!-- Conditional CSS/JS for subtemplates here -->
+	{{#if view_splash}}
+	<link rel="stylesheet" href="/css/splash.css">
+	{{/if}} {{#if view_about}}
+	<link rel="stylesheet" href="/css/about.css">
+	{{/if}} {{#if view_login}}
+	<link rel="stylesheet" href="/css/login.css">
+	{{/if}}
+	<!-- End conditional CSS/JSS -->
+
 	<link rel='shortcut icon' href="/img/favicon.png">
 	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -33,7 +44,7 @@
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a class="nav-color" href="#"><strong>Login</strong></a></li>
+					<li><a class="nav-color" href="/login"><strong>Login</strong></a></li>
 					<li><a class="nav-color" href="#"><strong>Signup</strong></a></li>
 				</ul>
 			</div><!--/.nav-collapse -->

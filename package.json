@@ -23,8 +23,10 @@
   "homepage": "https://github.com/TeamPelican/QueueUp",
   "dependencies": {
     "bower": "^1.6.3",
+    "connect-flash": "^0.1.1",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
+    "express-session": "^1.12.1",
     "mongodb": "^2.0.46",
     "morgan": "^1.6.1"
   }
