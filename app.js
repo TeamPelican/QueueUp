@@ -4,7 +4,8 @@ var handlebars = require('express-handlebars');
 var session = require('express-session');
 var flash = require('connect-flash');
 var morgan = require('morgan');
-
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
 //////////////////////////////////////////////////////////////////////
 ///// Express App Setup //////////////////////////////////////////////
@@ -47,6 +48,14 @@ app.use(flash());
 // 'tiny' provides minimal output.
 app.use(morgan('tiny'));
 
+
+// Body Parser:
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Cookie Parser:
+app.use(cookieParser());
+
 //// End Middleware Setup
 
 //////////////////////////////////////////////////////////////////////
@@ -54,6 +63,7 @@ app.use(morgan('tiny'));
 //////////////////////////////////////////////////////////////////////
 
 app.use('/', require('./routes/index'));
+app.use('/user', require('./routes/user'));
 
 //////////////////////////////////////////////////////////////////////
 ///// Error Middleware ///////////////////////////////////////////////

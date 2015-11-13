@@ -19,6 +19,17 @@ router.get('/about', (req, res) => {
     res.render('about');
 });
 
+router.get('/test', (req,res) => {
+  var user = req.session.user;
+  console.log(user);
+  console.log(req.session);
+  var message = req.flash('test') || "login successful!!!!";
+  res.render('test', {
+    message:message,
+    name: user.name
+  });
+});
+
 //
 // A generic route that expects a user name with the 'user' querystring.
 // We search for it using team.one() in this single route
