@@ -21,6 +21,11 @@ router.get('/login', (req, res) => {
     }
 });
 
+router.get('/signup', (req, res) => {
+    // TODO: everything!
+    res.render('signup', { title : 'Sign up for QueuUp'});
+});
+
 router.post('/auth', (req, res) => {
     var user = req.session.user;
 

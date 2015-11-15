@@ -13,6 +13,10 @@ router.get('/login', (req, res) => {
     res.redirect('/user/login');
 });
 
+router.get('/signup', (req, res) => {
+    res.redirect('/user/signup');
+});
+
 router.get('/logout', (req,res) => {
     res.redirect('/user/logout');
 });
