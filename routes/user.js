@@ -86,4 +86,8 @@ router.post('/auth', (req,res) => {
         res.redirect('/user/login');
     });
 
+    router.get('/profile'), function(req, res) {
+        
+    }
+
     module.exports = router;
