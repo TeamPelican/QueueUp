@@ -30,7 +30,7 @@ router.post('/auth', (req,res) => {
 
         var user = req.session.user;
 
-        if (false) {
+        if (user) {
             // TODO: change 'false' to actual check to see
             // if user is already logged in
         } else {

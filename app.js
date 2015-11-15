@@ -123,6 +123,8 @@ app.use(internalServerError500);
 // parameter is a function that gets invoked after the application is
 // up and running.
 app.listen(app.get('port'), () => {
+    var db = require('./lib/MongoDB-user');
+    db.addUser('admin','admin',true,function(){});
     console.log('QueueUp started on http://localhost:' +
     app.get('port') + '; press Ctrl-C to terminate');
 });
