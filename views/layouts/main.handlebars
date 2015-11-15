@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>QueueUp</title>
+	<title>{{title}}</title>
 	<!-- We are conditionally including test support if the showTests
 	variables has been set. -->
 	{{#if showTests}}
@@ -44,8 +44,12 @@
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
+					{{#unless loggedIn}}
 					<li><a class="nav-color" href="/login"><strong>Login</strong></a></li>
 					<li><a class="nav-color" href="#"><strong>Signup</strong></a></li>
+					{{else}}
+					<li><a class="nav-color" href="/logout"><strong>Logout</strong></a></li>
+					{{/unless}}
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
