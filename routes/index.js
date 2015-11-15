@@ -10,9 +10,12 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.locals.view_login = true; // for template specific css/js
-    res.render('login');
+    res.redirect('/user/login');
 });
+
+router.get('/logout', (req,res) => {
+    res.redirect('/user/logout');
+})
 
 router.get('/about', (req, res) => {
     res.locals.view_about = true; // for template specific css/js

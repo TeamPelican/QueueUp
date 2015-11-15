@@ -1,6 +1,7 @@
 // This requires the necessary libraries for the webapp.
 var express    = require('express');
 var handlebars = require('express-handlebars');
+var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('connect-flash');
 var morgan = require('morgan');
@@ -20,8 +21,21 @@ var view = handlebars.create({ defaultLayout: 'main' });
 app.engine('handlebars', view.engine);
 app.set('view engine', 'handlebars');
 
+// Body Parser:
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 // Static File Serving
 app.use(express.static(__dirname + '/public'));
+
+// Middleware to pass to the view whether or not the current session user
+// exists. This can let us show/hide certain aspects of the view.
+// E.g., if the user is logged in, they should not see a "login" button any-
+// more, but should see a "logout" button.
+function loggedIn(req, res, next) {
+    res.locals.loggedIn = req.session.user;
+    next();
+}
 
 // Test Middleware that we might not even need right now...
 function testmw(req, res, next) {
@@ -30,14 +44,17 @@ function testmw(req, res, next) {
     // Passes the request to the next route handler.
     next();
 }
-// This adds our testing middleware to the express app.
-app.use(testmw);
 
+// Session Support:
 app.use(session({
     secret: 'notmuchofasecret',
     saveUninitialized: false, // doesn't save uninitialized session
     resave: false // doesn't save session if not modified
 }));
+
+// Custom Middleware.
+app.use(loggedIn);
+app.use(testmw);
 
 // Flash Support.
 app.use(flash());
@@ -54,6 +71,8 @@ app.use(morgan('tiny'));
 //////////////////////////////////////////////////////////////////////
 
 app.use('/', require('./routes/index'));
+app.use('/user', require('./routes/user'));
+
 
 //////////////////////////////////////////////////////////////////////
 ///// Error Middleware ///////////////////////////////////////////////
