@@ -14,8 +14,10 @@ router.get('/login', (req, res) => {
         // TODO: change 'false' to actual check to see
         // if user is already logged in
     } else {
+        var message = req.flash('login') || '';
         res.locals.view_login = true; // for template specific css/js
-        res.render('login');
+        res.render('login', { title   : 'QueueUp Login',
+        message : message });
     }
 });
 
@@ -31,6 +33,8 @@ router.post('/auth', (req, res) => {
 
         if (!name || !pass) {
             // TODO: send helpful message to login saying empty fields
+            req.flash('login', 'Please enter all fields.');
+            res.redirect('/login');
         } else {
             model.lookup(name, pass, function(error, user) {
                 if (error) {

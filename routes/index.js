@@ -6,7 +6,7 @@ var router = express.Router();
 
 router.get('/', (req, res) => {
     res.locals.view_splash = true; // for template specific css/js
-    res.render('splash');
+    res.render('splash', { title: "QueueUp" });
 });
 
 router.get('/login', (req, res) => {
@@ -15,11 +15,11 @@ router.get('/login', (req, res) => {
 
 router.get('/logout', (req,res) => {
     res.redirect('/user/logout');
-})
+});
 
 router.get('/about', (req, res) => {
     res.locals.view_about = true; // for template specific css/js
-    res.render('about');
+    res.render('about', { title: 'About QueueUp' });
 });
 
 //
@@ -39,6 +39,7 @@ router.get('/team', (req, res) => {
         notFound404(req, res);
     } else {
         res.render('team', {
+            title: 'The QueueUp Team',
             members: result.data,
             pageTestScript: '/qa/tests-team.js'
         });
