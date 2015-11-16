@@ -21,6 +21,8 @@
 	<link rel="stylesheet" href="/css/about.css">
 	{{/if}} {{#if view_login}}
 	<link rel="stylesheet" href="/css/login.css">
+	{{/if}} {{#if view_signup}}
+	<link rel="stylesheet" href="/css/signup.css">
 	{{/if}}
 	<!-- End conditional CSS/JSS -->
 
@@ -46,7 +48,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					{{#unless loggedIn}}
 					<li><a class="nav-color" href="/login"><strong>Login</strong></a></li>
-					<li><a class="nav-color" href="#"><strong>Signup</strong></a></li>
+					<li><a class="nav-color" href="/signup"><strong>Signup</strong></a></li>
 					{{else}}
 					<li><a class="nav-color" href="/logout"><strong>Logout</strong></a></li>
 					{{/unless}}

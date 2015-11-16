@@ -1,5 +1,4 @@
 var express = require('express');
-var model = require('../lib/user');
 var db = require('../lib/MongoDB-user.js');
 
 var router = express.Router();
@@ -26,32 +25,39 @@ router.post('/auth', (req,res) => {
 });
 
 router.post('/add', (req,res) => {
-  var user = req.session.user;
-  if (user){
-    res.redirect('/profile');
-    return;
-  }
   var name = req.body.name;
   var password = req.body.pass;
-  req.session.user = {"name" : name};
   db.addUser(name,password,false,function(err){
     if (err) {
+      console.log(err);
       req.flash("signup",err);
       res.redirect('/signup');
       return;
     }
+    req.session.user = {"name" : name};
     res.redirect('/profile');
   });
 });
 
+router.get('/signup', (req, res) => {
+    // TODO: everything!
+    var user = req.session.user;
+    if (user){
+      res.redirect('/profile');
+      return;
+    }
+    var message = req.flash('signup') || '';
+    res.locals.view_signup = true;
+    res.render('signup', { title : 'Sign up for QueueUp',
+                            message : message});
+});
+
 router.get('/login', (req, res) => {
   // TODO: Redirect if already logged in
-
   var user = req.session.user;
 
   if (user) {
-    // TODO: change 'false' to actual check to see
-    // if user is already logged in
+    res.redirect('/profile');
   } else {
     var message = req.flash('login') || '';
     res.locals.view_login = true; // for template specific css/js
@@ -59,6 +65,7 @@ router.get('/login', (req, res) => {
     message : message });
   }
 });
+
 
 // router.post('/auth', (req, res) => {
 //     var user = req.session.user;
