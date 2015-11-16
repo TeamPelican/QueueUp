@@ -5,85 +5,104 @@ var db = require('../lib/MongoDB-user.js');
 var router = express.Router();
 
 router.post('/auth', (req,res) => {
-    var name = req.body.name;
-    var password = req.body.pass;
-    // console.log(name);
-    // console.log(password);
-    // //console.log(req);
-    // console.log(req.body);
-    db.login(name , password, function(status,msg){
-        if (status===true){
-            req.session.user = {"name":name};
-            req.flash("test",msg);
-            res.redirect('/test');
-        }else{
-            // console.log(status);
-            // console.log(msg);
-            req.flash("login",msg);
-            res.redirect('/login');
-        }
-    });
+  var user = req.session.user;
+  if (user==='undefined'){
+    req.flash("login","Please log in");
+    res.redirect('/login');
+    return;
+  }
+  var name = req.body.name;
+  var password = req.body.pass;
+  db.login(name , password, function(status,msg){
+    if (status===true){
+      req.session.user = {"name":name};
+      req.flash("test",msg);
+      res.redirect('/test');
+    }else{
+      req.flash("login",msg);
+      res.redirect('/login');
+    }
+  });
 });
 
-    router.get('/login', (req, res) => {
-        // TODO: Redirect if already logged in
+router.post('/add', (req,res) => {
+  var user = req.session.user;
+  if (user){
+    res.redirect('/profile');
+    return;
+  }
+  var name = req.body.name;
+  var password = req.body.pass;
+  req.session.user = {"name" : name};
+  db.addUser(name,password,false,function(err){
+    if (err) {
+      req.flash("signup",err);
+      res.redirect('/signup');
+      return;
+    }
+    res.redirect('/profile');
+  });
+});
 
-        var user = req.session.user;
+router.get('/login', (req, res) => {
+  // TODO: Redirect if already logged in
 
-        if (user) {
-            // TODO: change 'false' to actual check to see
-            // if user is already logged in
-        } else {
-            var message = req.flash('login') || '';
-            res.locals.view_login = true; // for template specific css/js
-            res.render('login', { title   : 'QueueUp Login',
-            message : message });
-        }
-    });
+  var user = req.session.user;
 
-    // router.post('/auth', (req, res) => {
-    //     var user = req.session.user;
-    //
-    //     if (false) {
-    //         // TODO: change 'false' to actual check to see
-    //         // if user is already logged in
-    //     } else {
-    //         var name = req.body.name;
-    //         var pass = req.body.pass;
-    //
-    //         if (!name || !pass) {
-    //             // TODO: send helpful message to login saying empty fields
-    //             req.flash('login', 'Please enter all fields.');
-    //             res.redirect('/login');
-    //         } else {
-    //             model.lookup(name, pass, function(error, user) {
-    //                 if (error) {
-    //                     req.flash('login', error);
-    //                     res.redirect('/user/login');
-    //                 } else {
-    //                     // create a session variable to represent stateful connection
-    //                     req.session.user = user;
-    //                     // TODO: Change to redirect to "dashboard"
-    //                     res.redirect('/');
-    //                 }
-    //             });
-    //         }
-    //     }
-    // });
+  if (user) {
+    // TODO: change 'false' to actual check to see
+    // if user is already logged in
+  } else {
+    var message = req.flash('login') || '';
+    res.locals.view_login = true; // for template specific css/js
+    res.render('login', { title   : 'QueueUp Login',
+    message : message });
+  }
+});
 
-    router.get('/logout', function(req, res) {
-        var user = req.session.user;
+// router.post('/auth', (req, res) => {
+//     var user = req.session.user;
+//
+//     if (false) {
+//         // TODO: change 'false' to actual check to see
+//         // if user is already logged in
+//     } else {
+//         var name = req.body.name;
+//         var pass = req.body.pass;
+//
+//         if (!name || !pass) {
+//             // TODO: send helpful message to login saying empty fields
+//             req.flash('login', 'Please enter all fields.');
+//             res.redirect('/login');
+//         } else {
+//             model.lookup(name, pass, function(error, user) {
+//                 if (error) {
+//                     req.flash('login', error);
+//                     res.redirect('/user/login');
+//                 } else {
+//                     // create a session variable to represent stateful connection
+//                     req.session.user = user;
+//                     // TODO: Change to redirect to "dashboard"
+//                     res.redirect('/');
+//                 }
+//             });
+//         }
+//     }
+// });
 
-        // TODO: add check to see if user session exists AND is NOT already online
-        if (false) { // user && !online[user.name]
-            delete req.session.user;
-        } else {
-            // delete online[user.name];
-            delete req.session.user;
-        }
+router.get('/logout', function(req, res) {
+  var user = req.session.user;
 
-        // maybe add a flash method for saying "Successfully logged out?"
-        res.redirect('/user/login');
-    });
+  // TODO: add check to see if user session exists AND is NOT already online
+  if (false) { // user && !online[user.name]
+    delete req.session.user;
+  } else {
+    // delete online[user.name];
+    delete req.session.user;
+  }
 
-    module.exports = router;
+  // maybe add a flash method for saying "Successfully logged out?"
+  res.redirect('/user/login');
+});
+
+module.exports = router;
