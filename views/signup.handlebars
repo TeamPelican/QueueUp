@@ -1,1 +1,28 @@
-<h1>Hello QueueUp!</h1>
+<script type="text/javascript"><!--
+function checkPasswordMatch() {
+    var password = $("#inputPassword").val();
+    var confirmPassword = $("#confirmPassword").val();
+
+    if (password != confirmPassword)
+        $("#divCheckPasswordMatch").html("Passwords do not match!");
+    else
+        $("#divCheckPasswordMatch").html("Passwords match.");
+<form class="form-signup" method="post" action="/user/auth">
+    <h2 class="form-signup-heading">Sign Up</h2>
+    <form class="form-horizontal">
+    	Username:
+    	<label for="inputUsername" class="sr-only">Username</label>
+    	<input id="inputUsername" type="text" name="name" class="form-control"
+    	placeholder="Username" required autofocus>
+    	<!--Username can contain any letters or numbers-->
+    </form>
+    Password: <label for="password" class="sr-only">Password</label>
+    <input id="inputPassword" type="password" name="pass" class="form-control"
+    placeholder="Password" required>
+    Re-enter Password: <label for="password" class="sr-only">Password</label>
+    <input id="confirmPassword" type="password" name="pass" class="form-control"
+    placeholder="Re-enter Password" required>
+    <class="registrationFormAlert" id="divCheckPasswordMatch">
+    <br></br>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+
