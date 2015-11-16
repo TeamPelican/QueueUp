@@ -14,8 +14,7 @@ router.post('/auth', (req,res) => {
     db.login(name , password, function(status,msg){
         if (status===true){
             req.session.user = {"name":name};
-            req.flash("test",msg);
-            res.redirect('/test');
+            res.redirect('/profile');
         }else{
             // console.log(status);
             // console.log(msg);
@@ -26,18 +25,17 @@ router.post('/auth', (req,res) => {
 });
 
     router.get('/login', (req, res) => {
-        // TODO: Redirect if already logged in
-
         var user = req.session.user;
 
         if (user) {
-            // TODO: change 'false' to actual check to see
-            // if user is already logged in
+            res.redirect('/profile');
         } else {
             var message = req.flash('login') || '';
             res.locals.view_login = true; // for template specific css/js
-            res.render('login', { title   : 'QueueUp Login',
-            message : message });
+            res.render('login', {
+                title    : 'QueueUp Login',
+                message  : message
+            });
         }
     });
 
@@ -86,8 +84,17 @@ router.post('/auth', (req,res) => {
         res.redirect('/user/login');
     });
 
-    router.get('/profile'), function(req, res) {
-        
-    }
+    router.get('/profile', function(req, res) {
+        var user = req.session.user;
+
+        if (!user) {
+            res.redirect('/login');
+        } else {
+            res.locals.view_profile = true;
+            res.render('profile', {
+                title: req.session.user.name + '\'s Profile'
+            });
+        }
+    });
 
     module.exports = router;
