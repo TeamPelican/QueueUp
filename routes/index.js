@@ -21,6 +21,10 @@ router.get('/logout', (req,res) => {
   res.redirect('/user/logout');
 });
 
+router.get('/profile', (req, res) => {
+    res.redirect('/user/profile');
+});
+
 router.get('/about', (req, res) => {
   res.locals.view_about = true; // for template specific css/js
   res.render('about', { title: 'About QueueUp' });

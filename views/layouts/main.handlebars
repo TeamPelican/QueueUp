@@ -23,6 +23,8 @@
 	<link rel="stylesheet" href="/css/login.css">
 	{{/if}} {{#if view_signup}}
 	<link rel="stylesheet" href="/css/signup.css">
+	{{/if}} {{#if view_profile}}
+	<link rel="stylesheet" href="/css/profile.css">
 	{{/if}}
 	<!-- End conditional CSS/JSS -->
 
@@ -50,6 +52,7 @@
 					<li><a class="nav-color" href="/login"><strong>Login</strong></a></li>
 					<li><a class="nav-color" href="/signup"><strong>Signup</strong></a></li>
 					{{else}}
+					<li><a class="nav-color" href="/profile"><strong>{{username}}</strong></a></li>
 					<li><a class="nav-color" href="/logout"><strong>Logout</strong></a></li>
 					{{/unless}}
 				</ul>

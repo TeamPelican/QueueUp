@@ -34,7 +34,11 @@ app.use(express.static(__dirname + '/public'));
 // E.g., if the user is logged in, they should not see a "login" button any-
 // more, but should see a "logout" button.
 function loggedIn(req, res, next) {
-    res.locals.loggedIn = req.session.user;
+    res.locals.loggedIn = false;
+    if (req.session.user) {
+        res.locals.loggedIn = true;
+        res.locals.username = req.session.user.name;
+    }
     next();
 }
 
