@@ -29,7 +29,7 @@ router.post('/add', (req,res) => {
     var password = req.body.pass;
     db.addUser(name,password,false,function(err){
         if (err) {
-            console.log(err);
+            // console.log(err);
             req.flash("signup",err);
             res.redirect('/signup');
             return;
