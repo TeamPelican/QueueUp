@@ -5,23 +5,22 @@ var router = express.Router();
 
 router.post('/auth', (req,res) => {
   var user = req.session.user;
-  if (user==='undefined'){
+  if (!user){
     req.flash("login","Please log in");
     res.redirect('/login');
-    return;
+  } else {
+    var name = req.body.name;
+    var password = req.body.pass;
+    db.login(name , password, function(err, result) {
+      if (err) {
+        req.flash("login", err);
+        res.redirect('/login');
+      } else {
+        req.session.user = {"name":name};
+        res.redirect('/profile');
+      }
+    });
   }
-  var name = req.body.name;
-  var password = req.body.pass;
-  db.login(name , password, function(status,msg){
-    if (status===true){
-      req.session.user = {"name":name};
-      req.flash("profile",msg);
-      res.redirect('/profile');
-    }else{
-      req.flash("login",msg);
-      res.redirect('/login');
-    }
-  });
 });
 
 router.post('/add', (req,res) => {
@@ -45,9 +44,11 @@ router.get('/signup', (req, res) => {
     return;
   }
   var message = req.flash('signup') || '';
-  res.locals.view_signup = true;
-  res.render('signup', { title : 'Sign up for QueueUp',
-  message : message});
+  res.locals.view_signup = true; // for template specific css/js
+  res.render('signup', {
+    title : 'Sign up for QueueUp',
+    message : message
+  });
 });
 
 router.get('/login', (req, res) => {
@@ -65,44 +66,12 @@ router.get('/login', (req, res) => {
   }
 });
 
-// router.post('/auth', (req, res) => {
-//     var user = req.session.user;
-//
-//     if (false) {
-//         // TODO: change 'false' to actual check to see
-//         // if user is already logged in
-//     } else {
-//         var name = req.body.name;
-//         var pass = req.body.pass;
-//
-//         if (!name || !pass) {
-//             // TODO: send helpful message to login saying empty fields
-//             req.flash('login', 'Please enter all fields.');
-//             res.redirect('/login');
-//         } else {
-//             model.lookup(name, pass, function(error, user) {
-//                 if (error) {
-//                     req.flash('login', error);
-//                     res.redirect('/user/login');
-//                 } else {
-//                     // create a session variable to represent stateful connection
-//                     req.session.user = user;
-//                     // TODO: Change to redirect to "dashboard"
-//                     res.redirect('/');
-//                 }
-//             });
-//         }
-//     }
-// });
-
 router.get('/logout', function(req, res) {
   var user = req.session.user;
 
-  // TODO: add check to see if user session exists AND is NOT already online
-  if (false) { // user && !online[user.name]
+  if (user) {
     delete req.session.user;
   } else {
-    // delete online[user.name];
     delete req.session.user;
   }
 
