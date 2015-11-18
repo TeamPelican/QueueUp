@@ -5,16 +5,16 @@ var router = express.Router();
 
 router.post('/auth', (req,res) => {
   var user = req.session.user;
-  if (!user){
-    req.flash("login","Please log in");
-    res.redirect('/login');
+  if (user){
+    req.flash("profile");
+    res.redirect('/profile');
   } else {
     var name = req.body.name;
     var password = req.body.pass;
     db.login(name , password, function(err, result) {
       if (err) {
         req.flash("login", err);
-        res.redirect('/login');
+        res.redirect('/user/login');
       } else {
         req.session.user = {"name":name};
         res.redirect('/profile');
