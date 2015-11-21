@@ -57,11 +57,12 @@ router.get('/team', (req, res) => {
   var result;
   // render a specific member's info if ?member exists
   if (req.query.user)
-  result = team.one(req.query.user);
+    result = team.one(req.query.user);
   else
-  result = team.all();
-  if (!result.success) {
-    notFound404(req, res);
+    result = team.all();
+  if (!result || !result.success) {
+    res.status(404);
+    res.render('404');
   } else {
     res.render('team', {
       title: 'The QueueUp Team',
