@@ -12,7 +12,15 @@
 	<!-- We add the jQuery library because we will be using it
 	to manipulate HTML in the browser. -->
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/bower_components/sweetalert/dist/sweetalert.css">
 	<link rel="stylesheet" href="/css/styles.css">
+
+	<link rel='shortcut icon' href="/img/favicon.png">
+	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+
+	<script src="/javascripts/error.js"></script>
 
 	<!-- Conditional CSS/JS for subtemplates here -->
 	{{#if view_splash}}
@@ -23,14 +31,11 @@
 	<link rel="stylesheet" href="/css/login.css">
 	{{/if}} {{#if view_signup}}
 	<link rel="stylesheet" href="/css/signup.css">
+	<script src="/javascripts/signup.js"></script>
 	{{/if}} {{#if view_profile}}
 	<link rel="stylesheet" href="/css/profile.css">
 	{{/if}}
 	<!-- End conditional CSS/JSS -->
-
-	<link rel='shortcut icon' href="/img/favicon.png">
-	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
