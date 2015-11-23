@@ -120,7 +120,7 @@ router.post('/change-pass', function(req, res) {
         db.changePassword(user.name, newPass, function(err,result) {
           if (err) {
             req.session.alertStatus = 'error';
-            req.flash('profile', 'Error changing password, user not found!');
+            req.flash('profile', err);
           } else {
             req.session.alertStatus = 'success';
             req.flash('profile', 'Successfully changed password!');
