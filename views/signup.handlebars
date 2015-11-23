@@ -1,0 +1,18 @@
+<form class="form-signup" method="post" action="/user/add">
+  <h2 class="form-signup-heading">Sign Up</h2>
+  <label for="inputUsername" class="sr-only">Username</label>
+  <input id="inputUsername" type="text" name="name" class="form-control"
+  placeholder="Username" required autofocus>
+  <!--Username can contain any letters or numbers-->
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input id="inputPassword" type="password" class="form-control" placeholder="Password" required>
+  <label for="inputPasswordConfirm" class="sr-only">Confirm password</label>
+  <input id="inputPasswordConfirm" type="password" name="pass" class="form-control"
+  placeholder="Confirm Password" required>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+</form>
+{{#if message}}
+  <script>
+    showDialog("{{message}}"); // /javascripts/common.js
+  </script>
+{{/if}}

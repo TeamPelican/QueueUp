@@ -1,0 +1,23 @@
+/* Dan's crying about the colors so you should probably let him take care of those... */
+#info {
+    padding: 10px;
+    color: white;
+    background-color: #343434;
+    border: solid 1px black;
+    border-radius: 4px;
+}
+#info .btn-primary {
+    color: black;
+    background-color: white;
+    border-color: white;
+}
+#services {
+    margin-top: 10px;
+    border-radius: 4px;
+}
+#services .list-group-item {
+    height: 50px;
+    color: white;
+    border-color: black;
+    background-color: #343434;
+}

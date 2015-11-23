@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>QueueUp</title>
+	<title>{{title}}</title>
 	<!-- We are conditionally including test support if the showTests
 	variables has been set. -->
 	{{#if showTests}}
@@ -12,7 +12,15 @@
 	<!-- We add the jQuery library because we will be using it
 	to manipulate HTML in the browser. -->
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/bower_components/sweetalert/dist/sweetalert.css">
 	<link rel="stylesheet" href="/css/styles.css">
+
+	<link rel='shortcut icon' href="/img/favicon.png">
+	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+
+	<script src="/javascripts/common.js"></script>
 
 	<!-- Conditional CSS/JS for subtemplates here -->
 	{{#if view_splash}}
@@ -21,12 +29,15 @@
 	<link rel="stylesheet" href="/css/about.css">
 	{{/if}} {{#if view_login}}
 	<link rel="stylesheet" href="/css/login.css">
+	{{/if}} {{#if view_signup}}
+	<link rel="stylesheet" href="/css/signup.css">
+	<script src="/javascripts/signup.js"></script>
+	{{/if}} {{#if view_profile}}
+	<link rel="stylesheet" href="/css/profile.css">
+	<link rel="stylesheet" href="/css/changePass.css">
+	<script src="/javascripts/profile.js"></script>
 	{{/if}}
 	<!-- End conditional CSS/JSS -->
-
-	<link rel='shortcut icon' href="/img/favicon.png">
-	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -44,8 +55,13 @@
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
+					{{#unless loggedIn}}
 					<li><a class="nav-color" href="/login"><strong>Login</strong></a></li>
-					<li><a class="nav-color" href="#"><strong>Signup</strong></a></li>
+					<li><a class="nav-color" href="/signup"><strong>Signup</strong></a></li>
+					{{else}}
+					<li><a class="nav-color" href="/profile"><strong>{{username}}</strong></a></li>
+					<li><a class="nav-color" href="/logout"><strong>Logout</strong></a></li>
+					{{/unless}}
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>

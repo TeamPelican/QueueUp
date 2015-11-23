@@ -1,0 +1,59 @@
+.form-changepass #message {
+  margin-bottom: 5px;
+}
+.form-changepass {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-changepass .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-changepass .form-control:focus {
+  z-index: 2;
+}
+.modal-content {
+  background-color: #343434;
+  border: solid 2px #1ED760;
+}
+.modal-header {
+  border-bottom: solid 2px #1ED760;
+}
+.close {
+  color: white;
+  opacity: 1;
+}
+.close:hover {
+  color: #1ED760;
+  opacity: 1;
+}
+.modal-body .form-horizontal .col-sm-2,
+.modal-body .form-horizontal .col-sm-10 {
+    width: 100%;
+}
+.modal-body .form-horizontal .control-label {
+    text-align: left;
+}
+.modal-body .form-horizontal .col-sm-offset-2 {
+    margin-left: 15px;
+}
+#inputCurrentPassword {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#inputNewPassword {
+  margin-bottom: -1px;
+  border-radius: 0;
+}
+#inputNewPassConfirm {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
