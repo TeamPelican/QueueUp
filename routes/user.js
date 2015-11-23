@@ -117,11 +117,7 @@ router.post('/change-pass', function(req, res) {
       } else {
         var newPass = req.body.newPass;
         delete req.session.invalidAttempts;
-        // TODO changePassword incorrectly does not fail if an invalid
-        // variable is passed for the first parameter.
-        // E.g., I incorrectly passed in the entire "user" object, and it still
-        // said it was a success, but it should have said "User not found"
-        db.changePassword(user.name, newPass, function(err) {
+        db.changePassword(user.name, newPass, function(err,result) {
           if (err) {
             req.session.alertStatus = 'error';
             req.flash('profile', err);
