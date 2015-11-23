@@ -7,6 +7,8 @@ var flash = require('connect-flash');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var MongoClient = require('mongodb').MongoClient;
+var MongoStore = require('connect-mongo')(session);
 
 //////////////////////////////////////////////////////////////////////
 ///// Express App Setup //////////////////////////////////////////////
@@ -54,7 +56,8 @@ function testmw(req, res, next) {
 app.use(session({
   secret: 'notmuchofasecret',
   saveUninitialized: false, // doesn't save uninitialized session
-  resave: false // doesn't save session if not modified
+  resave: false, // doesn't save session if not modified
+  store: new MongoStore({url : 'mongodb://localhost:27017/session'})
 }));
 
 // Custom Middleware.
