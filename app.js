@@ -52,9 +52,9 @@ function testmw(req, res, next) {
 
 // Session Support:
 app.use(session({
-    secret: 'notmuchofasecret',
-    saveUninitialized: false, // doesn't save uninitialized session
-    resave: false // doesn't save session if not modified
+  secret: 'notmuchofasecret',
+  saveUninitialized: false, // doesn't save uninitialized session
+  resave: false // doesn't save session if not modified
 }));
 
 // Custom Middleware.

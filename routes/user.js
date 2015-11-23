@@ -16,6 +16,9 @@ router.post('/auth', (req,res) => {
         req.flash("login", err);
         res.redirect('/user/login');
       } else {
+        if (req.body.rememberme){
+          req.session.cookie.maxAge= 7*24*60*60*1000; // 7 days
+        }
         req.session.user = {"name":name};
         res.redirect('/profile');
       }
@@ -67,13 +70,14 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/logout', function(req, res) {
-  var user = req.session.user;
-
-  if (user) {
-    delete req.session.user;
-  } else {
-    delete req.session.user;
-  }
+  // var user = req.session.user;
+  //
+  // if (user) {
+  //   delete req.session.user;
+  // } else {
+  //   delete req.session.user;
+  // }
+  req.session.destroy();
 
   // maybe add a flash method for saying "Successfully logged out?"
   res.redirect('/user/login');
@@ -81,7 +85,6 @@ router.get('/logout', function(req, res) {
 
 router.get('/profile', function(req, res) {
   var user = req.session.user;
-
   if (!user) {
     res.redirect('/login');
   } else {
