@@ -1,12 +1,12 @@
 <div id="info">
-    Username: {{username}}<br>
-    <br>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#changePassForm">Change Password</button>
+  Username: {{username}}<br>
+  <br>
+  <button class="btn btn-primary" data-toggle="modal" data-target="#changePassForm">Change Password</button>
 </div>
 <div id="services" class="list-group">
-    <a href="#" class="list-group-item">BEEP</a>
-    <a href="#" class="list-group-item">BOOP</a>
-    <a href="#" class="list-group-item">BOP</a>
+  <a href="#" class="list-group-item">BEEP</a>
+  <a href="#" class="list-group-item">BOOP</a>
+  <a href="#" class="list-group-item">BOP</a>
 </div>
 <div class="modal fade" id="changePassForm" tabindex="-1" role="dialog" aria-labelledby="changePassLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -22,30 +22,20 @@
       </div>
       <div class="modal-body">
         <form class="form-horizontal form-changepass" role="form" method="post" action="/user/change-pass">
-          <div class="form-group">
-            <div class="col-sm-10">
-              <input type="password" class="form-control" name="currPass"
-              id="inputCurrentPassword" title="Current Password" placeholder="Current Password"/>
-            </div>
-            <div class="col-sm-10">
-              <input type="password" class="form-control" name="newPass"
-              id="inputNewPassword" title="New Password" placeholder="New Password"/>
-            </div>
-            <div class="col-sm-10">
-              <input type="password" class="form-control"
-              id="inputNewPassConfirm" title="Confirm New Password" placeholder="Confirm New Password"/>
-            </div>
-            <div class="col-sm-10">
-              <button type="submit" class="btn btn-default">Change Password</button>
-            </div>
-          </div>
+          <input type="password" class="form-control" name="currPass"
+          id="inputCurrentPassword" title="Current Password" placeholder="Current Password" required autofocus/>
+          <input type="password" class="form-control" name="newPass"
+          id="inputNewPassword" title="New Password" placeholder="New Password" required/>
+          <input type="password" class="form-control"
+          id="inputNewPassConfirm" title="Confirm New Password" placeholder="Confirm New Password" required/>
+          <button type="submit" class="btn btn-default">Change Password</button>
         </form>
       </div>
     </div>
   </div>
 </div>
 {{#if message}}
-  <script>
-    showDialog("{{message}}", "{{status}}"); // /javascripts/common.js
-  </script>
+<script>
+showDialog("{{message}}", "{{status}}"); // /javascripts/common.js
+</script>
 {{/if}}
