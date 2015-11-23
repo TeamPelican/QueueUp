@@ -11,10 +11,10 @@
             <input type="checkbox" value="remember-me"> Remember me
         </label>
     </div>
-    {{#if message}}
-      <script>
-        errorMessageDialog("{{message}}"); // /javascripts/error.js
-      </script>
-    {{/if}}
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
+{{#if message}}
+  <script>
+    showDialog("{{message}}"); // /javascripts/common.js
+  </script>
+{{/if}}

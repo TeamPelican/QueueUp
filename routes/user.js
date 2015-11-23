@@ -67,27 +67,70 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/logout', function(req, res) {
-  var user = req.session.user;
-
-  if (user) {
-    delete req.session.user;
-  } else {
-    delete req.session.user;
-  }
-
+  delete req.session.user;
+  delete req.session.invalidAttempts;
+  delete req.session.alertStatus;
   // maybe add a flash method for saying "Successfully logged out?"
   res.redirect('/user/login');
 });
 
 router.get('/profile', function(req, res) {
   var user = req.session.user;
+  var chgPwdSuccess = req.session.chgPwdSuccess;
+  if (!user) {
+    res.redirect('/user/login');
+  } else {
+    var message = req.flash('profile') || '';
+    var status = req.session.alertStatus; // use for proper pop-up dialog
+    delete req.session.alertStatus; // reset session variable
+    res.locals.view_profile = true;
+    res.render('profile', {
+      title: req.session.user.name + '\'s Profile',
+      message: message,
+      status: status
+    });
+  }
+});
 
+router.post('/change-pass', function(req, res) {
+  var user = req.session.user;
   if (!user) {
     res.redirect('/login');
   } else {
-    res.locals.view_profile = true;
-    res.render('profile', {
-      title: req.session.user.name + '\'s Profile'
+    var currPass = req.body.currPass;
+    db.login(user.name, currPass, function(err) {
+      if (err) {
+        req.session.alertStatus = 'error';
+        if (!req.session.invalidAttempts) {
+          req.session.invalidAttempts = 0;
+        }
+        req.session.invalidAttempts++;
+        // logout if 3 invalid attempts
+        if (req.session.invalidAttempts > 2) {
+          req.flash('login', 'Exceeded amount of incorrect login attempts.');
+          res.redirect('/user/logout');
+        } else {
+          req.flash('profile', 'Incorrect password');
+          res.redirect('/user/profile');
+        }
+      } else {
+        var newPass = req.body.newPass;
+        delete req.session.invalidAttempts;
+        // TODO changePassword incorrectly does not fail if an invalid
+        // variable is passed for the first parameter.
+        // E.g., I incorrectly passed in the entire "user" object, and it still
+        // said it was a success, but it should have said "User not found"
+        db.changePassword(user.name, newPass, function(err) {
+          if (err) {
+            req.session.alertStatus = 'error';
+            req.flash('profile', err);
+          } else {
+            req.session.alertStatus = 'success';
+            req.flash('profile', 'Successfully changed password!');
+          }
+          res.redirect('/user/profile');
+        });
+      }
     });
   }
 });
