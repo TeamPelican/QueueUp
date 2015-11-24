@@ -88,6 +88,7 @@ app.use(cookieParser());
 
 app.use('/', require('./routes/index'));
 app.use('/user', require('./routes/user'));
+app.use('/oauth2', require('./routes/oauth2'));
 
 //////////////////////////////////////////////////////////////////////
 ///// Error Middleware ///////////////////////////////////////////////
