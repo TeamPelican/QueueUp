@@ -1,5 +1,13 @@
 var express = require('express');
 var db = require('../lib/MongoDB-user.js');
+var api = require('../api.json')
+
+//setup youtube auth URL
+var google = require('googleapis');
+var OAuth2 = google.auth.OAuth2;
+var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[0]);
+var scopes = 'https://www.googleapis.com/auth/youtube';
+
 
 var router = express.Router();
 
@@ -81,16 +89,52 @@ router.get('/profile', function(req, res) {
   if (!user) {
     res.redirect('/user/login');
   } else {
+    
+    //fill
     var message = req.flash('profile') || '';
     var status = req.session.alertStatus; // use for proper pop-up dialog
+    var authUrl = oauth2Client.generateAuthUrl({
+      access_type: 'offline',
+      scope: scopes
+    });
     delete req.session.alertStatus; // reset session variable
     res.locals.view_profile = true;
     res.render('profile', {
       title: req.session.user.name + '\'s Profile',
       message: message,
-      status: status
+      status: status,
+      youtube_url: authUrl
     });
   }
+});
+
+router.get('/callback', (req,res) => {
+  var user = req.session.user;
+  if(!user){
+    res.redirect('/login');
+  } else {
+    var authCode = req.query.code;
+    oauth2Client.getToken(authCode, function(err, tokens){
+      if(!err){
+        db.addYoutubeAPI(user,tokens,function(error, result){
+          if(error){
+            req.flash('profile', error.toString());
+            res.redirect('/profile');
+          } else {
+            req.flash("profile","Success!");
+            res.redirect('/profile')
+            oauth2Client.setCredentials(tokens);
+          }
+        });
+        
+      } else{
+        req.flash('profile',err.toString());
+        res.redirect('/profile');
+      }
+    });
+  }
+  // req.flash('profile',req.param("code"));
+  // res.redirect('/profile');
 });
 
 router.post('/change-pass', function(req, res) {
