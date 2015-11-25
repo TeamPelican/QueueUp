@@ -1,7 +1,8 @@
+<h2>Your Queue:</h2>
 <div id="carousel" class="content">
 {{#each content}}
 <div>
-	<a href="https://www.youtube.com/watch?v={{this.id.videoId}}"><img src={{this.snippet.thumbnails.medium.url}}></img></a>
+	<a href="https://www.youtube.com/watch?v={{this.id.videoId}}" target="_blank"><img src={{this.snippet.thumbnails.medium.url}}></img></a>
 	<h5>{{this.snippet.title}}</h5>
 </div>
 {{/each}}
