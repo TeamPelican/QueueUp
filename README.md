@@ -72,3 +72,35 @@ JQuery allows us to easily add functionality to our webpages and make special HT
 #### [sweetalert](https://github.com/t4t5/sweetalert)
 QueueUp makes use of sweetalert to have visually appealing alert messages that get triggered when special events occur.
 
+### Views
+In this section, we summarize each of the currently functioning views of QueueUp.
+#### Splash
+This is a minimal view that acts as the first point of interaction with QueueUp. The purpose of this view is not to overwhelm the user immediately but to easily show the product logo, a brief phrase describing QueueUp, other useful links at the bottom of the page, and the abilities to login or signup.
+
+Keep in mind that the footer is visible on every view, regardless of whether the user is logged in. The functionality of the navbar will change when the user logs in.
+#### Login (/login)
+This is a very simple login view. QueueUp offers the functionality for a user's login to be "remembered", meaning their logged in session will be preserved for 7 days. A user needs to use this view in order to gain access to QueueUp's main functionality.
+#### Signup (/signup)
+The layout to the Signup view is almost identical to that of Login's. In order to use QueueUp, a user must create an account at this page if they have not already. They will be automatically logged in after submitting the form, but if any errors are present in the form (E.g. the user name they have chosen already exists), an error dialog will be presented for them to fix those errors.
+#### Profile (/profile)
+This page contains two sections: an area displaying info about the user (currently only their username) and an option to change their password, and an area displaying which streaming services the user has authorized.
+Users will use the Profile page in order to manage which streaming services they have currently activated for their QueueUp account.
+#### Dashboard (/dashboard)
+This is one of the main views that demonstrates QueueUp's main functionality. Here you will see your main queue in a carousel pulling content from whichever streaming services you have enabled over at the Profile page. Clicking on an element in the queue of the main view will deliver you to view that content in a new tab at that provider's website.
+#### About (/about)
+This page contains more verbose info about QueueUp's purpose and use cases.
+#### Team (/team)
+Here you will find information about the developers that make up Team Pelican. This view was adopted from one of our early CS326 projects, and still contains the functionality from that project to query for a team member with ```?user=<team_members_username```. Try it out with ```?user=nfuller```.
+#### Mockups (/mockups)
+This page contains links to many of the early mockups of QueueUp. These serve as a starting point for us when we develop the front-end of QueueUp.
+
+### Statefulness
+QueueUp implements statefulness similarly to how CS326 students were expected to do so in our 3rd individual project assignment. We use the express-session npm package to maintain a session variable and add a "user" object to that variable when a user logs into QueueUp.
+
+For many of QueueUp's routes, we perform a check to see if the user session variable exists before performing the expected logic at that route. For example, for most of the routes defined in ```/routes/user.js```, we redirect users to the Login page if they attempt to navigate to a route while not logged in.
+
+Sometimes, we also feel it is necessary to deliver messages when redirecting users. We use the ```connect-flash``` middleware to attach a useful message to a request for a resource that we eventually redirect to. When we redirect to that resource, the message is extracted and delivered to the view.
+
+An example of a stateful flow of QueueUp would be that which a user takes when changing their password. Assuming the user is already at the Profile page, they will initiate an HTTP POST request upon submission of the change-pass form which gets handled in ```/routes/user.js```. If for some reason the user's session expired before they submitted the form, they will be redirected to the login page. Otherwise, we make use of our MongoDB-user library to check to see that the current password they have entered is correct in order to avoid malicious entities attempting changing passwords of an already logged in user. If the incorrect password is entered too many times, they are redirected to /user/logout which destroys the user session and redirects to /user/login. Otherwise, the database is updated with the new password and the user gets redirected to the Profile page and is shown a message stating that they have successfully changed their password.
+
+### Persistence
