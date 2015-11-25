@@ -1,16 +1,58 @@
 var express = require('express');
-
 var team = require('../lib/team.js');
-
 var router = express.Router();
+//get DB
+var db = require('../lib/MongoDB-user.js');
+//get api creds
+var api = require('../lib/api.json');
+//setup youtube auth URL
+var google = require('googleapis');
+var OAuth2 = google.auth.OAuth2;
+var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[0]);
+var scopes = 'https://www.googleapis.com/auth/youtube';
+var youtube = google.youtube('v3');
 
 router.get('/', (req, res) => {
+
+  res.locals.view_splash = true; // for template specific css/js
+  var content = [];
   var user = req.session.user;
-  if (user) {
-    res.redirect('/user/dashboard');
+  //check for a logged in user in order to display content
+  if(user){
+    db.getYouTubeAPI(user.name, function(err, results){
+      if(err){
+        content = [];
+        res.render('splash', { title: "QueueUp", content: content });
+
+      }else{
+        oauth2Client.setCredentials(results);
+        youtube.search.list(
+                            {
+                              part: "snippet",
+                              // q: "",       //query string, not super helpful
+                              maxResults: 15,
+                              // order: "viewCount",
+                              // regionCode: "US",
+                              safeSearch: "moderate",
+                              type: "video",
+                              auth: oauth2Client
+                            }, function(err, response){
+                              if(err){
+                                console.log(err);
+                                content = [];
+                              }
+                              else{
+                                content = response.items;
+                              }
+                              res.render('splash', { title: "QueueUp", content: content });
+
+                            });
+      }
+
+    });
   } else {
-    res.locals.view_splash = true; // for template specific css/js
-    res.render('splash', { title: "QueueUp" });
+    content = ["nothing to see here","maybe try logging in"];
+    res.render('splash', { title: "QueueUp", content: content });
   }
 });
 
