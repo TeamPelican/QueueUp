@@ -2,18 +2,21 @@ var express = require('express');
 var db = require('../lib/MongoDB-user.js');
 var api = require('../lib/api.json');
 
+//get api creds
+var api = require('../lib/api.json');
 //setup youtube auth URL
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[2]);
+var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[0]);
 var scopes = 'https://www.googleapis.com/auth/youtube';
+var youtube = google.youtube('v3');
 
 
 var router = express.Router();
 
 router.post('/auth', (req,res) => {
   var user = req.session.user;
-  if (user){
+  if (user) {
     req.flash("profile");
     res.redirect('/profile');
   } else {
@@ -24,7 +27,7 @@ router.post('/auth', (req,res) => {
         req.flash("login", err);
         res.redirect('/user/login');
       } else {
-        if (req.body.rememberme){
+        if (req.body.rememberme) {
           req.session.cookie.maxAge= 7*24*60*60*1000; // 7 days
         }
         req.session.user = {
@@ -94,11 +97,11 @@ router.get('/profile', function(req, res) {
   if (!user) {
     res.redirect('/user/login');
   } else {
-    
+
     //fill
     var message = req.flash('profile') || '';
     var status = req.session.alertStatus; // use for proper pop-up dialog
-    
+
     var authUrl = oauth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: scopes,
@@ -128,13 +131,13 @@ router.get('/callback', (req,res) => {
         // db.addYouTubeAPI("admin",{"access_token":"asdgaiwhgjb","refresh_token":"DSBIgualsuhgue"},function(error, result){
         db.addYouTubeAPI(user.name,tokens,function(error, result){
           if(error){
-            req.flash('profile', "Unable to add to database.");
+            req.flash('profile', error);
             res.redirect('/profile');
           } else {
-            res.redirect('/profile')
+            res.redirect('/profile');
           }
         });
-        
+
       } else{
         req.flash('profile',err.toString());
         res.redirect('/profile');
@@ -145,52 +148,78 @@ router.get('/callback', (req,res) => {
 
 router.get('/dashboard', function(req, res) {
   var user = req.session.user;
-
-  if(!user) {
+  var content = [];
+  if (!user) {
     res.redirect('/user/login');
   } else {
-    res.locals.view_dashboard = true;
-    res.render('dashboard');
-  }
-});
-
-router.post('/change-pass', function(req, res) {
-  var user = req.session.user;
-  if (!user) {
-    res.redirect('/login');
-  } else {
-    var currPass = req.body.currPass;
-    db.login(user.name, currPass, function(err) {
+    db.getYouTubeAPI(user.name, function(err, results){
       if (err) {
-        req.session.alertStatus = 'error';
-        if (!req.session.invalidAttempts) {
-          req.session.invalidAttempts = 0;
-        }
-        req.session.invalidAttempts++;
-        // logout if 3 invalid attempts
-        if (req.session.invalidAttempts > 2) {
-          req.flash('login', 'Exceeded amount of incorrect login attempts.');
-          res.redirect('/user/logout');
-        } else {
-          req.flash('profile', 'Incorrect password');
-          res.redirect('/user/profile');
-        }
+        res.render('dashboard', { title: "QueueUp", message: err});
       } else {
-        var newPass = req.body.newPass;
-        delete req.session.invalidAttempts;
-        db.changePassword(user.name, newPass, function(err,result) {
-          if (err) {
-            req.session.alertStatus = 'error';
-            req.flash('profile', err);
-          } else {
-            req.session.alertStatus = 'success';
-            req.flash('profile', 'Successfully changed password!');
-          }
-          res.redirect('/user/profile');
-        });
-      }
-    });
-  }
-});
+        oauth2Client.setCredentials(results);
+        youtube.search.list(
+          {
+            part: "snippet",
+            // q: "",       //query string, not super helpful
+            maxResults: 15,
+            // order: "viewCount",
+            // regionCode: "US",
+            safeSearch: "moderate",
+            type: "video",
+            auth: oauth2Client
+          }, function(err, response){
+            if (err) {
+              console.log(err);
+              content = [];
+            }
+            else {
+              content = response.items;
+            }
+            res.locals.view_dashboard = true;
+            res.render('dashboard', { title: "QueueUp", content: content });
+          });
+        }
+      });
+    }
+  });
 
-module.exports = router;
+  router.post('/change-pass', function(req, res) {
+    var user = req.session.user;
+    if (!user) {
+      res.redirect('/login');
+    } else {
+      var currPass = req.body.currPass;
+      db.login(user.name, currPass, function(err) {
+        if (err) {
+          req.session.alertStatus = 'error';
+          if (!req.session.invalidAttempts) {
+            req.session.invalidAttempts = 0;
+          }
+          req.session.invalidAttempts++;
+          // logout if 3 invalid attempts
+          if (req.session.invalidAttempts > 2) {
+            req.flash('login', 'Exceeded amount of incorrect login attempts.');
+            res.redirect('/user/logout');
+          } else {
+            req.flash('profile', 'Incorrect password');
+            res.redirect('/user/profile');
+          }
+        } else {
+          var newPass = req.body.newPass;
+          delete req.session.invalidAttempts;
+          db.changePassword(user.name, newPass, function(err,result) {
+            if (err) {
+              req.session.alertStatus = 'error';
+              req.flash('profile', err);
+            } else {
+              req.session.alertStatus = 'success';
+              req.flash('profile', 'Successfully changed password!');
+            }
+            res.redirect('/user/profile');
+          });
+        }
+      });
+    }
+  });
+
+  module.exports = router;
