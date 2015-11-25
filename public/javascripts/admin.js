@@ -3,8 +3,9 @@ $(document).ready(function() {
 
     var changeToAdmin = $(this).is(':checked');
     var username = $(this).attr('name');
+    var checkbox = $(this);
 
-    jQuery.ajax({
+    $.ajax({
       url: "http://localhost:3000/admin/changeAdmin",
       type: "POST",
       data: {
@@ -12,7 +13,10 @@ $(document).ready(function() {
         changeToAdmin: changeToAdmin
       },
       cache: false,
-      dataType: "json"
+      dataType: "json",
+      success: function(data) {
+        // place code here if we want to do something more with response from the server
+      }
     });
   });
 });

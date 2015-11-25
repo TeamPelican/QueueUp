@@ -43,10 +43,11 @@ router.post('/changeAdmin', (req, res) => {
       var username = req.body.username;
       db.changeAdmin(username, changeToAdmin, function(err) {
         if (err) {
-          req.flash('admin', err);
-          res.redirect('/admin/');
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end('{"error",' + error + '}');
         } else {
-          res.redirect('/admin/');
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end('{"success":true}');
         }
       });
     } else {
