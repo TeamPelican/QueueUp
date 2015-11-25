@@ -23,8 +23,7 @@ router.get('/', (req, res) => {
         content = [];
         res.render('splash', { title: "QueueUp", content: content });
 
-      }
-      else{
+      }else{
         oauth2Client.setCredentials(results);
         youtube.search.list( 
                             {
@@ -38,6 +37,7 @@ router.get('/', (req, res) => {
                               auth: oauth2Client
                             }, function(err, response){
                               if(err){
+                                console.log(err);
                                 content = [];
                               }
                               else{
