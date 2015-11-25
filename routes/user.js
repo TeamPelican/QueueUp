@@ -19,7 +19,10 @@ router.post('/auth', (req,res) => {
         if (req.body.rememberme){
           req.session.cookie.maxAge= 7*24*60*60*1000; // 7 days
         }
-        req.session.user = {"name":name};
+        req.session.user = {
+          "name"  : result.username,
+          "admin" : result.admin
+        };
         res.redirect('/profile');
       }
     });
