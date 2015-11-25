@@ -97,10 +97,49 @@ This page contains links to many of the early mockups of QueueUp. These serve as
 ### Statefulness
 QueueUp implements statefulness similarly to how CS326 students were expected to do so in our 3rd individual project assignment. We use the express-session npm package to maintain a session variable and add a "user" object to that variable when a user logs into QueueUp.
 
-For many of QueueUp's routes, we perform a check to see if the user session variable exists before performing the expected logic at that route. For example, for most of the routes defined in ```/routes/user.js```, we redirect users to the Login page if they attempt to navigate to a route while not logged in.
+For many of QueueUp's routes, we perform a check to see if the user session variable exists before performing the expected logic at that route. For example, for most of the routes defined in [```/routes/user.js```](https://github.com/TeamPelican/QueueUp/blob/master/routes/user.js), we redirect users to the Login page if they attempt to navigate to a route while not logged in.
 
 Sometimes, we also feel it is necessary to deliver messages when redirecting users. We use the ```connect-flash``` middleware to attach a useful message to a request for a resource that we eventually redirect to. When we redirect to that resource, the message is extracted and delivered to the view.
 
-An example of a stateful flow of QueueUp would be that which a user takes when changing their password. Assuming the user is already at the Profile page, they will initiate an HTTP POST request upon submission of the change-pass form which gets handled in ```/routes/user.js```. If for some reason the user's session expired before they submitted the form, they will be redirected to the login page. Otherwise, we make use of our MongoDB-user library to check to see that the current password they have entered is correct in order to avoid malicious entities attempting changing passwords of an already logged in user. If the incorrect password is entered too many times, they are redirected to /user/logout which destroys the user session and redirects to /user/login. Otherwise, the database is updated with the new password and the user gets redirected to the Profile page and is shown a message stating that they have successfully changed their password.
+An example of a stateful flow of QueueUp would be that which a user takes when changing their password. Assuming the user is already at the Profile page, they will initiate an HTTP POST request upon submission of the change-pass form which gets handled in [```/routes/user.js```](https://github.com/TeamPelican/QueueUp/blob/master/routes/user.js). If for some reason the user's session expired before they submitted the form, they will be redirected to the login page. Otherwise, we make use of our MongoDB-user library to check to see that the current password they have entered is correct in order to avoid malicious entities attempting changing passwords of an already logged in user. If the incorrect password is entered too many times, they are redirected to /user/logout which destroys the user session and redirects to /user/login. Otherwise, the database is updated with the new password and the user gets redirected to the Profile page and is shown a message stating that they have successfully changed their password.
+
+To get a much simpler idea of how statefulness is implemented in QueueUp, please take a look into [```/routes/index.js```](https://github.com/TeamPelican/QueueUp/blob/master/routes/index.js) which has much less complex logic than the user routes file, but you may see that it redirects to many of the routes defined in ```/routes/user.js```.
 
 ### Persistence
+QueueUp uses MongoDB for data persistence. Currently, we only make requests to a local MongoDB instance, but do plan to move to a remote instance with MongoLab. To access our MongoDB instance through JavaScript, we use the mongodb npm package.
+
+#### Important Files
+[```/lib/MongoDB-basic.js```](https://github.com/TeamPelican/QueueUp/blob/master/lib/MongoDB-basic.js) is our file that performs basic operations on the MongoDB database, such as adding, updating, finding, and removing data. We use this lib file in ```/lib/MongoDB-user.js``` in order to interact with our database. 
+
+[```/lib/MongoDB-user.js```](https://github.com/TeamPelican/QueueUp/blob/master/lib/MongoDB-user.js) is used to perform QueueUp specific accesses to the database. For example, the ```login``` function will take a username and password to see if the username/password pair exists in the database. In order to do this, it hashes the password entered (using bcrypt) and compares it to the password returned by the ```findData``` function in ```/lib/MongoDB-basic.js```. 
+
+#### Model
+As you can see, we do not use an object modeling service like [Mongoose](https://github.com/Automattic/mongoose) to manage how data is saved to our database, however there has been discussion of refactoring QueueUp to do so.
+
+Our database contains solely a Users collection, where each document in that collection contains information about that user and the API tokens that will be used for pulling data respective to their accounts for those services. The User document is outlined as follows:
+
+```
+{
+    _id : ObjectId("<unique_id_generated_by_mongo>"),
+    "user" : {
+        "username" : "<the_users_username>",
+        "password" : "<the_users_hashed_password>",
+        "admin" : <boolean_whether_user_has_admin_privileges>
+    },
+    "APIS" : {
+        "YouTube" : "<encrypted_youtube_access_token>",
+        "Twitch" : "<encrypted_twitch_access_token>",
+        "Netflix" : "<encrypted_netflix_access_token>",
+        "HBOGo" : "<encrypted_hbogo_access_token>",
+        "Amazon" : "<encrypted_amazon_prime_instant_access_token>"
+    }
+}
+```
+
+**Note:** You see that the list of APIs above implies that several services plan to be implemented, but it is likely that only a subset of these services will be implemented if any of those services do not currently offer public APIs.
+
+
+
+
+
+
