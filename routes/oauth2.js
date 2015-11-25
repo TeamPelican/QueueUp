@@ -36,6 +36,34 @@ router.get('/youtube', (req,res) => {
   }
 });
 
+router.get('/deauthorize', function(req,res){
+  var user = req.session.user;
+  //check for a logged in user in order to display content
+  if(user){
+    db.getYouTubeAPI(user.name, function(err, results){
+      if(err){
+        req.flash('profile',"Unable to get credentials. ",err);
+        res.redirect('/profile');
+      }
+      else{
+        var access_token = results.access_token;
+        db.removeYouTubeAPI(user.name, function(){
+          if(err){
+            req.flash('profile',"Unable to remove token. ",err);
+            res.redirect('/profile');
+          }
+          else{
+            res.redirect('https://accounts.google.com/o/oauth2/revoke?'+
+          'token='+access_token);
+          // 'redirect_uri=http://localhost:3000/user/profile');
+          }
+        })
+        
+      }
+    });
+  }
+});
+
 router.get('/oauth2callback', function(req, res) {
   var user = req.session.user;
 

@@ -3,11 +3,15 @@
   <br>
   <button class="btn btn-primary" data-toggle="modal" data-target="#changePassForm">Change Password</button>
 </div>
-<div id="services" class="list-group">
-  <a href="{{youtube_url}}" class="list-group-item">YouTube</a>
-  <a href="#" class="list-group-item">BOOP</a>
-  <a href="#" class="list-group-item">BOP</a>
-</div>
+<ul id="services" class="list-group">
+  <li class='list-group-item'>
+    YouTube
+  <a href="{{youtube_url}}" class="btn btn-primary">Authorize</a>
+  <a href="/oauth2/deauthorize" class="btn btn-danger">Deauthorize</a>
+  </li>
+  <li class="list-group-item">Another Service</li>
+  <li class="list-group-item">Another Service</li>
+</ul>
 <div class="modal fade" id="changePassForm" tabindex="-1" role="dialog" aria-labelledby="changePassLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
