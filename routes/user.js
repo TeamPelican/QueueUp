@@ -23,7 +23,10 @@ router.post('/auth', (req,res) => {
           "name"  : result.username,
           "admin" : result.admin
         };
-        res.redirect('/profile');
+        if (result.admin)
+          res.redirect('/admin');
+        else
+          res.redirect('/profile');
       }
     });
   }

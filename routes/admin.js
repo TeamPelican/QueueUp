@@ -4,7 +4,6 @@ var router = express.Router();
 
 router.get('/', (req, res) => {
   var user = req.session.user;
-
   if (user) {
     if (user.admin) {
       res.locals.view_admin = true;

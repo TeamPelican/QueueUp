@@ -63,6 +63,9 @@
 					<li><a class="nav-color" href="/signup"><strong>Signup</strong></a></li>
 					{{else}}
 					<li><a class="nav-color" href="/profile"><strong>{{username}}</strong></a></li>
+						{{#if isAdmin}}
+						<li><a class="nav-color" href="/admin"><strong>Administration</strong></a></li>
+						{{/if}}
 					<li><a class="nav-color" href="/logout"><strong>Logout</strong></a></li>
 					{{/unless}}
 				</ul>

@@ -35,7 +35,11 @@ app.use(express.static(__dirname + '/public'));
 // E.g., if the user is logged in, they should not see a "login" button any-
 // more, but should see a "logout" button.
 function isAdmin(req, res, next) {
-
+  res.locals.isAdmin = false;
+  if (req.session.user && req.session.user.admin) {
+    res.locals.isAdmin = true;
+  }
+  next();
 }
 
 function loggedIn(req, res, next) {
@@ -64,6 +68,7 @@ app.use(session({
 }));
 
 // Custom Middleware.
+app.use(isAdmin);
 app.use(loggedIn);
 app.use(testmw);
 
