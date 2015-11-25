@@ -32,6 +32,30 @@ At this point, you should now have all dependencies required to start QueueUp on
 ### MongoDB
 QueueUp implements data persistence through use of MongoDB. In order to successfully use QueueUp, you must first [install MongoDB](https://docs.mongodb.org/manual/installation/). Once you have MongoDB installed, make sure that both the ```mongo``` and ```mongod``` commands work in your terminal. 
 
+### Additional Files for Setup
+#### ./lib/password.json
+QueueUp also requires a password.json file to be used for encrypting data in your database. The password specifed in this file can be anything you like. Just be sure that you do no change it.
+
+#### ./lib/api.json
+Here you will need to place your api tokens. We have provided a specific api.json for our instructors in our submission, but for developers who would like to extend QueueUp, a new api.json will need to be created. The api.json file will be formatted as follows:
+```
+{
+  "web": {
+    "client_id": "<your_oauth_token>",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://accounts.google.com/o/oauth2/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "<your_client_secret>",
+    "redirect_uris": [
+      "http://localhost:3000/user/callback",
+      "http://localhost:3000/oauth2/oauth2callback",
+      "http://localhost:3000/oauth2/youtube"
+    ]
+  }
+}
+```
+In order to create <your_oauth_token> and <your_client_secret> from the JSON above, you will need to manually create credentials at the [Google Developers Console](https://console.developers.google.com/home).
+
 ## Running QueueUp
 First, you should open a new terminal and run the ```mongod``` command in order to start the local MongoDB server for QueueUp to connect to. This should start a MongoDB server on port 27017.
 

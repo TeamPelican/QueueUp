@@ -25,11 +25,6 @@
 	<!-- Conditional CSS/JS for subtemplates here -->
 	{{#if view_splash}}
 	<link rel="stylesheet" href="/css/splash.css">
-	<link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick.css">
-	<link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick-theme.css">
-	<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<script src="/bower_components/slick-carousel/slick/slick.js"></script>
-	<script src="/javascripts/carousel.js"></script>
 	{{/if}} {{#if view_about}}
 	<link rel="stylesheet" href="/css/about.css">
 	{{/if}} {{#if view_login}}
@@ -44,6 +39,11 @@
 	{{/if}} {{#if view_admin}}
 	<link rel="stylesheet" href="/css/admin.css">
 	<script src="/javascripts/admin.js"></script>
+	{{/if}} {{#if view_dashboard}}
+	<link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick.css">
+	<link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick-theme.css">
+	<script src="/bower_components/slick-carousel/slick/slick.min.js"></script>
+	<script src="/javascripts/dashboard.js"></script>
 	{{/if}}
 	<!-- End conditional CSS/JSS -->
 </head>

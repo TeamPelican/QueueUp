@@ -18,19 +18,49 @@ router.get('/youtube', (req,res) => {
     oauth2Client.getToken(authCode, function(err, tokens){
       if(!err){
         // db.addYouTubeAPI("admin",{"access_token":"asdgaiwhgjb","refresh_token":"DSBIgualsuhgue"},function(error, result){
-        console.log(tokens);
         db.addYouTubeAPI(user.name,tokens,function(error, result){
           if(error){
-            req.flash('profile', "Unable to add to database. ",error);
+            console.log(error);
+            req.flash('profile', error);
             res.redirect('/profile');
           } else {
-            res.redirect('/profile')
+            console.log("wtf breh");
+            res.redirect('/profile');
           }
         });
-        
+
       } else{
+        console.log(err);
         req.flash('profile',err.toString());
         res.redirect('/profile');
+      }
+    });
+  }
+});
+
+router.get('/deauthorize', function(req,res){
+  var user = req.session.user;
+  //check for a logged in user in order to display content
+  if(user){
+    db.getYouTubeAPI(user.name, function(err, results){
+      if(err){
+        req.flash('profile',"Unable to get credentials. ",err);
+        res.redirect('/profile');
+      }
+      else{
+        var access_token = results.access_token;
+        db.removeYouTubeAPI(user.name, function(){
+          if(err){
+            req.flash('profile',"Unable to remove token. ",err);
+            res.redirect('/profile');
+          }
+          else{
+            res.redirect('https://accounts.google.com/o/oauth2/revoke?'+
+          'token='+access_token);
+          // 'redirect_uri=http://localhost:3000/user/profile');
+          }
+        })
+        
       }
     });
   }
