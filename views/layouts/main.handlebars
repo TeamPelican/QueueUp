@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="/css/styles.css">
 
 	<link rel='shortcut icon' href="/img/favicon.png">
-	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="/bower_components/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -41,6 +41,9 @@
 	<link rel="stylesheet" href="/css/profile.css">
 	<link rel="stylesheet" href="/css/changePass.css">
 	<script src="/javascripts/profile.js"></script>
+	{{/if}} {{#if view_admin}}
+	<link rel="stylesheet" href="/css/admin.css">
+	<script src="/javascripts/admin.js"></script>
 	{{/if}}
 	<!-- End conditional CSS/JSS -->
 </head>
@@ -65,6 +68,9 @@
 					<li><a class="nav-color" href="/signup"><strong>Signup</strong></a></li>
 					{{else}}
 					<li><a class="nav-color" href="/profile"><strong>{{username}}</strong></a></li>
+						{{#if isAdmin}}
+						<li><a class="nav-color" href="/admin"><strong>Administration</strong></a></li>
+						{{/if}}
 					<li><a class="nav-color" href="/logout"><strong>Logout</strong></a></li>
 					{{/unless}}
 				</ul>
@@ -95,8 +101,9 @@
 			<a href="/about">About</a>
 			<a href="/team">Team</a>
 			<a href="/mockups">Mockups</a>
-			<a href="#">Help</a>
-			<a href="#">Contact Us</a>
+			<!-- commenting out for 11/25 submission -->
+			<!--a href="#">Help</a>
+			<a href="#">Contact Us</a-->
 		</div>
 	</footer>
 </body>

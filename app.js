@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('connect-flash');
 var morgan = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var MongoStore = require('connect-mongo')(session);
@@ -39,6 +38,14 @@ app.use(express.static(__dirname + '/public'));
 // exists. This can let us show/hide certain aspects of the view.
 // E.g., if the user is logged in, they should not see a "login" button any-
 // more, but should see a "logout" button.
+function isAdmin(req, res, next) {
+  res.locals.isAdmin = false;
+  if (req.session.user && req.session.user.admin) {
+    res.locals.isAdmin = true;
+  }
+  next();
+}
+
 function loggedIn(req, res, next) {
     res.locals.loggedIn = false;
     if (req.session.user) {
@@ -65,6 +72,7 @@ app.use(session({
 }));
 
 // Custom Middleware.
+app.use(isAdmin);
 app.use(loggedIn);
 app.use(testmw);
 
@@ -81,8 +89,6 @@ app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Cookie Parser:
-app.use(cookieParser());
 
 //// End Middleware Setup
 
@@ -92,6 +98,7 @@ app.use(cookieParser());
 
 app.use('/', require('./routes/index'));
 app.use('/user', require('./routes/user'));
+app.use('/admin', require('./routes/admin'));
 app.use('/oauth2',require('./routes/oauth2'));
 
 //////////////////////////////////////////////////////////////////////

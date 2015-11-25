@@ -83,10 +83,10 @@ router.get('/test', (req,res) => {
     console.log(req.session);
     var message = req.flash('test') || "login successful!!!!";
     res.render('test', {
-      message:message,
-      name: user.name
+      message : message,
+      name    : user.name
     });
-  }else{
+  } else{
     req.flash('login','login first');
     res.redirect('/user/login');
   }
