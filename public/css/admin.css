@@ -1,0 +1,9 @@
+#users {
+  max-width: 500px;
+  padding: 15px;
+  margin: 0 auto;
+}
+#users li {
+  background-color: #343434;
+  border: solid 1px black;
+}

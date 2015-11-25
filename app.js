@@ -35,6 +35,10 @@ app.use(express.static(__dirname + '/public'));
 // exists. This can let us show/hide certain aspects of the view.
 // E.g., if the user is logged in, they should not see a "login" button any-
 // more, but should see a "logout" button.
+function isAdmin(req, res, next) {
+
+}
+
 function loggedIn(req, res, next) {
     res.locals.loggedIn = false;
     if (req.session.user) {
@@ -88,6 +92,7 @@ app.use(cookieParser());
 
 app.use('/', require('./routes/index'));
 app.use('/user', require('./routes/user'));
+app.use('/admin', require('./routes/admin'));
 
 //////////////////////////////////////////////////////////////////////
 ///// Error Middleware ///////////////////////////////////////////////

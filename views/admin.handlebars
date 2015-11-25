@@ -1,0 +1,16 @@
+<ul id="users" class="list-group">
+  {{#each users}}
+  <form method="post" action="/admin/changeAdmin">
+    <li class="list-group-item">
+      <span class="username">{{this.username}}</span>
+      <span class="adminStatus">Administrator Privileges: <input class="checkbox" type="checkbox" name={{this.username}}
+      {{#if this.admin}}
+      checked
+      {{/if}}
+      >
+      </span>
+
+    </li>
+  </form>
+  {{/each}}
+</ul>
