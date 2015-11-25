@@ -87,6 +87,8 @@ This page contains two sections: an area displaying info about the user (current
 Users will use the Profile page in order to manage which streaming services they have currently activated for their QueueUp account.
 #### Dashboard (/dashboard)
 This is one of the main views that demonstrates QueueUp's main functionality. Here you will see your main queue in a carousel pulling content from whichever streaming services you have enabled over at the Profile page. Clicking on an element in the queue of the main view will deliver you to view that content in a new tab at that provider's website.
+#### Admin (/admin)
+Only users with admin privileges can access this page. When you first start the QueueUp server, an admin user with username="admin" and password="admin" is automatically created with admin privileges. At this page, admin users can modify admin privileges of other users. In the future, we plan to add to this page to possibly contain user statistics, such as how many users have authorized specific services.
 #### About (/about)
 This page contains more verbose info about QueueUp's purpose and use cases.
 #### Team (/team)
