@@ -15,7 +15,11 @@ router.get('/', (req, res) => {
             message: 'Error loading users from database!'
           });
         } else {
-          console.log(users);
+          users.sort(function(a, b) {
+            if (a.username.toLowerCase() > b.username.toLowerCase()) return 1;
+            if (a.username.toLowerCase() < b.username.toLowerCase()) return -1;
+            else return 0;
+          });
           res.render('admin', {
             title: 'Administration',
             users: users
@@ -39,11 +43,9 @@ router.post('/changeAdmin', (req, res) => {
       var username = req.body.username;
       db.changeAdmin(username, changeToAdmin, function(err) {
         if (err) {
-          console.log("ERR: " + err);
           req.flash('admin', err);
           res.redirect('/admin/');
         } else {
-          console.log("Success!");
           res.redirect('/admin/');
         }
       });

@@ -7,3 +7,12 @@
   background-color: #343434;
   border: solid 1px black;
 }
+.username {
+  font-size: 18pt;
+}
+.adminStatus {
+  float: right
+}
+.adminStatus input {
+  display: inline
+}
