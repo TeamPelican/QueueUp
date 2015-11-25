@@ -83,7 +83,6 @@ router.get('/logout', function(req, res) {
 
 router.get('/profile', function(req, res) {
   var user = req.session.user;
-  var chgPwdSuccess = req.session.chgPwdSuccess;
   if (!user) {
     res.redirect('/user/login');
   } else {
@@ -96,6 +95,17 @@ router.get('/profile', function(req, res) {
       message: message,
       status: status
     });
+  }
+});
+
+router.get('/dashboard', function(req, res) {
+  var user = req.session.user;
+
+  if(!user) {
+    res.redirect('/user/login');
+  } else {
+    res.locals.view_dashboard = true;
+    res.render('dashboard');
   }
 });
 

@@ -5,8 +5,13 @@ var team = require('../lib/team.js');
 var router = express.Router();
 
 router.get('/', (req, res) => {
-  res.locals.view_splash = true; // for template specific css/js
-  res.render('splash', { title: "QueueUp" });
+  var user = req.session.user;
+  if (user) {
+    res.redirect('/user/dashboard');
+  } else {
+    res.locals.view_splash = true; // for template specific css/js
+    res.render('splash', { title: "QueueUp" });
+  }
 });
 
 router.get('/login', (req, res) => {
