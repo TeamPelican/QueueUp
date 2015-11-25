@@ -18,9 +18,10 @@ router.get('/youtube', (req,res) => {
     oauth2Client.getToken(authCode, function(err, tokens){
       if(!err){
         // db.addYouTubeAPI("admin",{"access_token":"asdgaiwhgjb","refresh_token":"DSBIgualsuhgue"},function(error, result){
+        console.log(tokens);
         db.addYouTubeAPI(user.name,tokens,function(error, result){
           if(error){
-            req.flash('profile', "Unable to add to database.");
+            req.flash('profile', "Unable to add to database. ",error);
             res.redirect('/profile');
           } else {
             res.redirect('/profile')

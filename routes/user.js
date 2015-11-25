@@ -93,6 +93,7 @@ router.get('/profile', function(req, res) {
     //fill
     var message = req.flash('profile') || '';
     var status = req.session.alertStatus; // use for proper pop-up dialog
+    
     var authUrl = oauth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: scopes,
