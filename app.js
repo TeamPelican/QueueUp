@@ -12,7 +12,7 @@ var MongoStore = require('connect-mongo')(session);
 var Google = require('googleapis');
 var YouTube = Google.youtube('v3');
 var OAuth2 = Google.auth.OAuth2;
-var api = require('./api.json');
+var api = require('./lib/api.json');
 
 //////////////////////////////////////////////////////////////////////
 ///// Express App Setup //////////////////////////////////////////////
@@ -92,6 +92,7 @@ app.use(cookieParser());
 
 app.use('/', require('./routes/index'));
 app.use('/user', require('./routes/user'));
+app.use('/oauth2',require('./routes/oauth2'));
 
 //////////////////////////////////////////////////////////////////////
 ///// Error Middleware ///////////////////////////////////////////////

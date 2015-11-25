@@ -1,11 +1,11 @@
 var express = require('express');
 var db = require('../lib/MongoDB-user.js');
-var api = require('../api.json')
+var api = require('../lib/api.json');
 
 //setup youtube auth URL
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[0]);
+var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[2]);
 var scopes = 'https://www.googleapis.com/auth/youtube';
 
 
@@ -95,7 +95,8 @@ router.get('/profile', function(req, res) {
     var status = req.session.alertStatus; // use for proper pop-up dialog
     var authUrl = oauth2Client.generateAuthUrl({
       access_type: 'offline',
-      scope: scopes
+      scope: scopes,
+      state: "youtube"
     });
     delete req.session.alertStatus; // reset session variable
     res.locals.view_profile = true;
@@ -114,16 +115,17 @@ router.get('/callback', (req,res) => {
     res.redirect('/login');
   } else {
     var authCode = req.query.code;
+    var state = req.query.state;
+    console.log(authCode);
     oauth2Client.getToken(authCode, function(err, tokens){
       if(!err){
-        db.addYoutubeAPI(user,tokens,function(error, result){
+        // db.addYouTubeAPI("admin",{"access_token":"asdgaiwhgjb","refresh_token":"DSBIgualsuhgue"},function(error, result){
+        db.addYouTubeAPI(user.name,tokens,function(error, result){
           if(error){
-            req.flash('profile', error.toString());
+            req.flash('profile', "Unable to add to database.");
             res.redirect('/profile');
           } else {
-            req.flash("profile","Success!");
             res.redirect('/profile')
-            oauth2Client.setCredentials(tokens);
           }
         });
         
@@ -133,8 +135,6 @@ router.get('/callback', (req,res) => {
       }
     });
   }
-  // req.flash('profile',req.param("code"));
-  // res.redirect('/profile');
 });
 
 router.post('/change-pass', function(req, res) {

@@ -3,3 +3,4 @@ public/bower_components/
 .DS_Store
 DB/
 lib/password.json
+lib/api.json

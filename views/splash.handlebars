@@ -3,3 +3,11 @@
 </div>
 
 <h4>Your streaming media dashboard.</h4>
+<div class="carousel-placeholder">
+{{#each content}}
+<div>
+	<h5>{{this.snippet.title}}</h5>
+	<a href="https://www.youtube.com/watch?v={{this.id.videoId}}"><img src={{this.snippet.thumbnails.medium.url}}></img></a>
+</div>
+{{/each}}
+</div>
