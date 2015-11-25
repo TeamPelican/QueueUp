@@ -8,6 +8,10 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var MongoStore = require('connect-mongo')(session);
+var Google = require('googleapis');
+var YouTube = Google.youtube('v3');
+var OAuth2 = Google.auth.OAuth2;
+var api = require('./lib/api.json');
 
 //////////////////////////////////////////////////////////////////////
 ///// Express App Setup //////////////////////////////////////////////
@@ -64,7 +68,7 @@ app.use(session({
   secret: 'notmuchofasecret',
   saveUninitialized: false, // doesn't save uninitialized session
   resave: false, // doesn't save session if not modified
-  store: new MongoStore({url : 'mongodb://localhost:27017/session'})
+  store: new MongoStore({url : 'mongodb://127.0.0.1:27017/session'})
 }));
 
 // Custom Middleware.
@@ -95,6 +99,7 @@ app.use(bodyParser.json());
 app.use('/', require('./routes/index'));
 app.use('/user', require('./routes/user'));
 app.use('/admin', require('./routes/admin'));
+app.use('/oauth2',require('./routes/oauth2'));
 
 //////////////////////////////////////////////////////////////////////
 ///// Error Middleware ///////////////////////////////////////////////
