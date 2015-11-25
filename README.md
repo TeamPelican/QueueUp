@@ -63,3 +63,12 @@ This package allows QueueUp to keep track of a user session when the user logs i
 QueueUp uses the mongodb package to connect to our MongoDB instance through JavaScript. With this package, we are able to perform insertions, updates, and removals of data in our database.
 #### [morgan](https://github.com/expressjs/morgan)
 Morgan is a middleware that allows us to easily change how much logging to the server's console we receive upon each HTTP request made to the server. We currently use its 'tiny' amount of logging, but we could use many other options as seen at the link to the GitHub above.
+
+### Bower Packages
+#### [bootstrap](https://github.com/twbs/bootstrap)
+QueueUp uses Bootstrap as a foundation for CSS styling. Bootstrap allows us to easily get a nice UI with minimal additional CSS.
+#### [jquery](http://jquery.com/download/#downloading-jquery-using-bower)
+JQuery allows us to easily add functionality to our webpages and make special HTTP requests to the server.
+#### [sweetalert](https://github.com/t4t5/sweetalert)
+QueueUp makes use of sweetalert to have visually appealing alert messages that get triggered when special events occur.
+
