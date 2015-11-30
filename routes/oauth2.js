@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../lib/MongoDB-user.js');
-var api = require('../lib/api.json')
+var api = require('../lib/api.json');
 
 //setup youtube auth URL
 var google = require('googleapis');
@@ -18,7 +18,7 @@ router.get('/youtube', (req,res) => {
     oauth2Client.getToken(authCode, function(err, tokens){
       if(!err){
         // db.addYouTubeAPI("admin",{"access_token":"asdgaiwhgjb","refresh_token":"DSBIgualsuhgue"},function(error, result){
-        db.addYouTubeAPI(user.name,tokens,function(error, result){
+        db.addAPI(user.name,"YouTube",tokens,function(error, result){
           if(error){
             console.log(error);
             req.flash('profile', error);
@@ -42,14 +42,14 @@ router.get('/deauthorize', function(req,res){
   var user = req.session.user;
   //check for a logged in user in order to display content
   if(user){
-    db.getYouTubeAPI(user.name, function(err, results){
+    db.getAPI(user.name, "YouTube", function(err, results){
       if(err){
         req.flash('profile',"Unable to get credentials. ",err);
         res.redirect('/profile');
       }
       else{
         var access_token = results.access_token;
-        db.removeYouTubeAPI(user.name, function(){
+        db.removeAPI(user.name, "YouTube", function(){
           if(err){
             req.flash('profile',"Unable to remove token. ",err);
             res.redirect('/profile');
@@ -59,8 +59,8 @@ router.get('/deauthorize', function(req,res){
           'token='+access_token);
           // 'redirect_uri=http://localhost:3000/user/profile');
           }
-        })
-        
+        });
+
       }
     });
   }
