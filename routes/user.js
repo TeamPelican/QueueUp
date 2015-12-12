@@ -185,7 +185,7 @@ router.get('/dashboard', function(req, res) {
                 }
               }
               //console.log(recommendation);
-              if (recommendation.length===0){
+              //if (recommendation.length===0){
                 for (var items in response.items){
                   if (response.items[items].snippet.type==="upload") {
                     console.log(response.items[items]);
@@ -195,7 +195,7 @@ router.get('/dashboard', function(req, res) {
                                           description: response.items[items].snippet.description});
                   }
                 }
-              }
+              //}
               //console.log(response.items[0].contentDetails);
               content = recommendation;
             }
