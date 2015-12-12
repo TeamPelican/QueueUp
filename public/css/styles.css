@@ -5,7 +5,7 @@ html {
 body {
     padding-top: 55px; /* use in order to pad main content below nav-bar */
     margin-bottom: 60px; /* use for footer */
-    background-color: #1ED760;
+    background-color: #343434;
 }
 body > .container {
     color: white;
@@ -21,6 +21,13 @@ body > .container {
     padding-top: 7px;
     padding-bottom: 7px;
 }
+
+#content-panel {
+  margin-left: 30px;
+  margin-right: 30px;
+  background-color: white;
+}
+
 .logo-title-lg h1 {
     font-size: 65pt;
 }
@@ -39,7 +46,7 @@ body > .container {
     font-size: 15px;
     border: 0px;
     box-shadow: 0px 1px 4px 0px rgba(0,0,0,1);
-    background-color: #343434;
+    background-color: #983139;
 }
 .nav-color {
     color: white !important;
@@ -64,4 +71,12 @@ body > .container {
     margin-left: 20px;
     margin-right: 20px;
     color: white !important;
+}
+
+.slick-prev:before {
+  color: #343434 !important;
+}
+
+.slick-next:before {
+  color: #343434 !important;
 }
