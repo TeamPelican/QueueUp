@@ -6,7 +6,7 @@ var api = require('../lib/api.json');
 //setup youtube auth URL
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[2]);
+var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[1]);
 var scopes = 'https://www.googleapis.com/auth/youtube';
 
 router.get('/deauthorize', function(req,res){
