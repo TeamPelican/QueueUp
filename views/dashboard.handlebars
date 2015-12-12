@@ -1,12 +1,51 @@
-<h2>Your Queue:</h2>
-<div id="carousel" class="content">
-{{#each content}}
-<div>
-	<a href="https://www.youtube.com/watch?v={{videoId}}" target="_blank"><img src={{thumbnails}}></img></a>
-	<h5>{{title}}</h5>
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="//www.youtube.com/embed/DDWKuo3gXMQ"></iframe>
+
 </div>
-{{/each}}
+<br><br>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Your Queue</h3>
+  </div>
+
+			<div id="content-panel" class="panel-heading">
+				<h3 class="panel-title">YouTube</h3>
+
+					<div class="panel-body">
+						<div id="Twitch" class="content carousel">
+						{{#each content}}
+						<div>
+							<a href="https://www.youtube.com/watch?v={{videoId}}" target="_blank"><img src={{thumbnails}}></img></a>
+							<div class="caption" style="color: black">
+								<h5>{{title}}</h5>
+							</div>
+						</div>
+						{{/each}}
+						</div>
+					</div>
+				</div>
+
+				<div id="content-panel" class="panel-heading">
+					<h3 class="panel-title">Twitch</h3>
+
+						<div class="panel-body">
+							<div id="Twitch" class="content carousel">
+							{{#each content}}
+							<div>
+								<a href="https://www.youtube.com/watch?v={{videoId}}" target="_blank"><img src={{thumbnails}}></img></a>
+								<div class="caption" style="color: black">
+									<h5>{{title}}</h5>
+								</div>
+							</div>
+							{{/each}}
+							</div>
+						</div>
+					</div>
+
 </div>
+
+
 {{#if message}}
   <script>
     showDialog("{{message}}"); // /javascripts/common.js
