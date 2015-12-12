@@ -129,7 +129,7 @@ router.get('/callback', (req,res) => {
     oauth2Client.getToken(authCode, function(err, tokens){
       if(!err){
         // db.addYouTubeAPI("admin",{"access_token":"asdgaiwhgjb","refresh_token":"DSBIgualsuhgue"},function(error, result){
-        db.addYouTubeAPI(user.name,tokens,function(error, result){
+        db.addAPI(user.name,"YouTube",tokens,function(error, result){
           if(error){
             req.flash('profile', error);
             res.redirect('/profile');
@@ -152,7 +152,7 @@ router.get('/dashboard', function(req, res) {
   if (!user) {
     res.redirect('/user/login');
   } else {
-    db.getYouTubeAPI(user.name, function(err, results){
+    db.getAPI(user.name, "YouTube", function(err, results){
       if (err) {
         res.render('dashboard', { title: "QueueUp", message: err});
       } else {
