@@ -1,8 +1,6 @@
 var express = require('express');
-var router = express.Router();
-var db = require('../lib/MongoDB-user.js');
-var api = require('../lib/api.json');
 var oauth2 = require('../lib/oauth2.js');
+var router = express.Router();
 
 // TODO: finish this
 router.get('/deauthorize', function(req,res){
@@ -12,19 +10,12 @@ router.get('/deauthorize', function(req,res){
     req.flash('login', "Please log in to perform this action.");
     res.redirect('/user/login');
   } else {
-    db.getAPI(user.name, "YouTube", function(err, results){
-      if(err){
-        req.flash('profile',"Unable to get credentials. ",err);
+    oauth2.deauthorize(user, function(error, revokeUrl) {
+      if (error) {
+        req.flash('profile', err);
         res.redirect('/profile');
-      }
-      else{
-        var accessToken = results.access_token;
-        oauth2.deauthorize(user, accessToken, function(error) {
-          if (error) {
-            req.flash('profile', err);
-            res.redirect('/profile');
-          }
-        });
+      } else {
+        res.redirect(revokeUrl);
       }
     });
   }

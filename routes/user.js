@@ -129,15 +129,17 @@ router.get('/dashboard', function(req, res) {
         res.render('dashboard', { title: "QueueUp", message: err});
       } else {
         oauth2Client.setCredentials(results);
-        youtube.search.list(
+        youtube.activities.list(
           {
-            part: "snippet",
+            part: "snippet,contentDetails",
             // q: "",       //query string, not super helpful
             maxResults: 15,
+            home: true,
+            //mine: true,
             // order: "viewCount",
             // regionCode: "US",
-            safeSearch: "moderate",
-            type: "video",
+            //safeSearch: "moderate",
+            //type: "video",
             auth: oauth2Client
           }, function(err, response){
             if (err) {
@@ -145,7 +147,14 @@ router.get('/dashboard', function(req, res) {
               content = [];
             }
             else {
-              content = response.items;
+              var recommendation = [];
+              for (var item in response.items){
+                if (response.items[item].snippet.type==="upload") {
+                  recommendation.push(response.items[item]);
+                }
+              }
+              console.log(response.items[0].contentDetails);
+              content = recommendation;
             }
             res.locals.view_dashboard = true;
             res.render('dashboard', { title: "QueueUp", content: content });
