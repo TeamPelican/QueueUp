@@ -105,7 +105,7 @@ router.get('/profile', function(req, res) {
     var authUrl = oauth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: scopes,
-      state: "youtube"
+      state: "YouTube"
     });
     delete req.session.alertStatus; // reset session variable
     res.locals.view_profile = true;
