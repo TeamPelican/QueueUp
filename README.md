@@ -72,8 +72,6 @@ This will start the QueueUp web application on port 3000 if you do not have an e
 ## Libraries
 **Note:** It is important that you view the dependencies of the following libraries should you have any trouble setting up and/or running QueueUp after cloning this repository.
 ### Npm Packages
-#### [bcrypt](https://github.com/ncb000gt/node.bcrypt.js)
-QueueUp uses bcrypt to safely hash passwords when storing them in our database. Unfortunately, we may need to consider replacing this library as it seems there are a large number of hard-to-acquire dependencies that greatly complicates setup of QueueUp for developers using a Windows environment.
 #### [body-parser](https://github.com/expressjs/body-parser)
 Body-parser is currently used to create middleware that parses either URL-encoded or JSON bodies of HTTP requests.
 #### [bower](https://github.com/bower/bower)
