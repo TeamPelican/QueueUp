@@ -31,7 +31,7 @@ router.get('/oauth2callback', function(req, res) {
     var authCode = req.query.code;
     oauth2.getToken(user, authCode, state, function(error) {
       if (error) {
-        req.flash('profile',err.toString());
+        req.flash('profile',error.toString());
       }
       res.redirect('/profile');
     });
