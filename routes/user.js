@@ -7,7 +7,7 @@ var api = require('../lib/api.json');
 //setup youtube auth URL
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[0]);
+var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[1]);
 var scopes = 'https://www.googleapis.com/auth/youtube';
 var youtube = google.youtube('v3');
 
@@ -114,34 +114,6 @@ router.get('/profile', function(req, res) {
       message: message,
       status: status,
       youtube_url: authUrl
-    });
-  }
-});
-
-router.get('/callback', (req,res) => {
-  var user = req.session.user;
-  if(!user){
-    res.redirect('/login');
-  } else {
-    var authCode = req.query.code;
-    var state = req.query.state;
-    console.log(authCode);
-    oauth2Client.getToken(authCode, function(err, tokens){
-      if(!err){
-        // db.addYouTubeAPI("admin",{"access_token":"asdgaiwhgjb","refresh_token":"DSBIgualsuhgue"},function(error, result){
-        db.addAPI(user.name,"YouTube",tokens,function(error, result){
-          if(error){
-            req.flash('profile', error);
-            res.redirect('/profile');
-          } else {
-            res.redirect('/profile');
-          }
-        });
-
-      } else{
-        req.flash('profile',err.toString());
-        res.redirect('/profile');
-      }
     });
   }
 });
