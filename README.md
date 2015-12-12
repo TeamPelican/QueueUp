@@ -34,7 +34,12 @@ QueueUp implements data persistence through use of MongoDB. In order to successf
 
 ### Additional Files for Setup
 #### ./lib/password.json
-QueueUp also requires a password.json file to be used for encrypting data in your database. The password specifed in this file can be anything you like. Just be sure that you do no change it.
+QueueUp also requires a password.json file to be used for encrypting data in your database. The password specifed in this file can be anything you like. Just be sure that you do not change it. Below is an example password.json file:
+```
+{
+  "password" : "thisisonlyanexample"
+}
+```
 
 #### ./lib/api.json
 Here you will need to place your api tokens. We have provided a specific api.json for our instructors in our submission, but for developers who would like to extend QueueUp, a new api.json will need to be created. The api.json file will be formatted as follows:
