@@ -161,7 +161,7 @@ router.get('/dashboard', function(req, res) {
           {
             part: "snippet,contentDetails",
             // q: "",       //query string, not super helpful
-            maxResults: 15,
+            maxResults: 50,
             home: true,
             //mine: true,
             // order: "viewCount",
@@ -177,13 +177,29 @@ router.get('/dashboard', function(req, res) {
             else {
               var recommendation = [];
               for (var item in response.items){
-                if (response.items[item].snippet.type==="upload") {
-                  recommendation.push(response.items[item]);
+                if (response.items[item].snippet.type==="recommendation") {
+                  recommendation.push({videoId:response.items[item].contentDetails.recommendation.resourceId.videoId,
+                                        title: response.items[item].snippet.title,
+                                        thumbnails: response.items[item].snippet.thumbnails.medium.url,
+                                        description: response.items[item].snippet.description});
                 }
               }
-              console.log(response.items[0].contentDetails);
+              //console.log(recommendation);
+              if (recommendation.length===0){
+                for (var items in response.items){
+                  if (response.items[items].snippet.type==="upload") {
+                    console.log(response.items[items]);
+                    recommendation.push({videoId:response.items[items].contentDetails.upload.videoId,
+                                          title: response.items[items].snippet.title,
+                                          thumbnails: response.items[items].snippet.thumbnails.medium.url,
+                                          description: response.items[items].snippet.description});
+                  }
+                }
+              }
+              //console.log(response.items[0].contentDetails);
               content = recommendation;
             }
+            console.log(content);
             res.locals.view_dashboard = true;
             res.render('dashboard', { title: "QueueUp", content: content });
           });
