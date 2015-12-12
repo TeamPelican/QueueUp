@@ -7,7 +7,7 @@ var api = require('../lib/api.json');
 //setup youtube auth URL
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[0]);
+var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[1]);
 var scopes = 'https://www.googleapis.com/auth/youtube';
 var youtube = google.youtube('v3');
 
@@ -105,7 +105,7 @@ router.get('/profile', function(req, res) {
     var authUrl = oauth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: scopes,
-      state: "youtube"
+      state: "YouTube"
     });
     delete req.session.alertStatus; // reset session variable
     res.locals.view_profile = true;
@@ -157,15 +157,17 @@ router.get('/dashboard', function(req, res) {
         res.render('dashboard', { title: "QueueUp", message: err});
       } else {
         oauth2Client.setCredentials(results);
-        youtube.search.list(
+        youtube.activities.list(
           {
-            part: "snippet",
+            part: "snippet,contentDetails",
             // q: "",       //query string, not super helpful
-            maxResults: 15,
+            maxResults: 50,
+            home: true,
+            //mine: true,
             // order: "viewCount",
             // regionCode: "US",
-            safeSearch: "moderate",
-            type: "video",
+            //safeSearch: "moderate",
+            //type: "video",
             auth: oauth2Client
           }, function(err, response){
             if (err) {
@@ -173,8 +175,31 @@ router.get('/dashboard', function(req, res) {
               content = [];
             }
             else {
-              content = response.items;
+              var recommendation = [];
+              for (var item in response.items){
+                if (response.items[item].snippet.type==="recommendation") {
+                  recommendation.push({videoId:response.items[item].contentDetails.recommendation.resourceId.videoId,
+                                        title: response.items[item].snippet.title,
+                                        thumbnails: response.items[item].snippet.thumbnails.medium.url,
+                                        description: response.items[item].snippet.description});
+                }
+              }
+              //console.log(recommendation);
+              //if (recommendation.length===0){
+                for (var items in response.items){
+                  if (response.items[items].snippet.type==="upload") {
+                    console.log(response.items[items]);
+                    recommendation.push({videoId:response.items[items].contentDetails.upload.videoId,
+                                          title: response.items[items].snippet.title,
+                                          thumbnails: response.items[items].snippet.thumbnails.medium.url,
+                                          description: response.items[items].snippet.description});
+                  }
+                }
+              //}
+              //console.log(response.items[0].contentDetails);
+              content = recommendation;
             }
+            console.log(content);
             res.locals.view_dashboard = true;
             res.render('dashboard', { title: "QueueUp", content: content });
           });

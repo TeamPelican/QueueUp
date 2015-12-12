@@ -6,37 +6,8 @@ var api = require('../lib/api.json');
 //setup youtube auth URL
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[2]);
+var oauth2Client = new OAuth2(api.web.client_id, api.web.client_secret, api.web.redirect_uris[1]);
 var scopes = 'https://www.googleapis.com/auth/youtube';
-
-router.get('/youtube', (req,res) => {
-  var user = req.session.user;
-  if(!user){
-    res.redirect('/login');
-  } else {
-    var authCode = req.query.code;
-    oauth2Client.getToken(authCode, function(err, tokens){
-      if(!err){
-        // db.addYouTubeAPI("admin",{"access_token":"asdgaiwhgjb","refresh_token":"DSBIgualsuhgue"},function(error, result){
-        db.addAPI(user.name,"YouTube",tokens,function(error, result){
-          if(error){
-            console.log(error);
-            req.flash('profile', error);
-            res.redirect('/profile');
-          } else {
-            console.log("wtf breh");
-            res.redirect('/profile');
-          }
-        });
-
-      } else{
-        console.log(err);
-        req.flash('profile',err.toString());
-        res.redirect('/profile');
-      }
-    });
-  }
-});
 
 router.get('/deauthorize', function(req,res){
   var user = req.session.user;
@@ -73,11 +44,26 @@ router.get('/oauth2callback', function(req, res) {
     req.flash('login', "Please log in to perform this action.");
     res.redirect('/user/login');
   } else {
-    var accessCode = req.query.code;
     var state = req.query.state;
-    if(state){
-      res.redirect("/oauth2/"+state);
-    }
+    var authCode = req.query.code;
+    oauth2Client.getToken(authCode, function(err, tokens){
+      if(!err){
+        db.addAPI(user.name,state,tokens,function(error, result){
+          if(error){
+            console.log(error);
+            req.flash('profile', error);
+            res.redirect('/profile');
+          } else {
+            console.log("wtf breh");
+            res.redirect('/profile');
+          }
+        });
+      } else{
+        console.log(err);
+        req.flash('profile',err.toString());
+        res.redirect('/profile');
+      }
+    });
   }
 });
 

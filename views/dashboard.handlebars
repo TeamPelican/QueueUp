@@ -1,6 +1,6 @@
-
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="//www.youtube.com/embed/DDWKuo3gXMQ"></iframe>
+
 </div>
 <br><br>
 
@@ -16,9 +16,9 @@
 						<div id="Twitch" class="content carousel">
 						{{#each content}}
 						<div>
-							<a href="https://www.youtube.com/watch?v={{this.id.videoId}}" target="_blank"><img src={{this.snippet.thumbnails.medium.url}}></img></a>
+							<a href="https://www.youtube.com/watch?v={{videoId}}" target="_blank"><img src={{thumbnails}}></img></a>
 							<div class="caption" style="color: black">
-								<h5>{{this.snippet.title}}</h5>
+								<h5>{{title}}</h5>
 							</div>
 						</div>
 						{{/each}}
@@ -33,9 +33,9 @@
 							<div id="Twitch" class="content carousel">
 							{{#each content}}
 							<div>
-								<a href="https://www.youtube.com/watch?v={{this.id.videoId}}" target="_blank"><img src={{this.snippet.thumbnails.medium.url}}></img></a>
+								<a href="https://www.youtube.com/watch?v={{videoId}}" target="_blank"><img src={{thumbnails}}></img></a>
 								<div class="caption" style="color: black">
-									<h5>{{this.snippet.title}}</h5>
+									<h5>{{title}}</h5>
 								</div>
 							</div>
 							{{/each}}
