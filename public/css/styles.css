@@ -28,6 +28,10 @@ body > .container {
   background-color: white;
 }
 
+.playable {
+  cursor: pointer;
+}
+
 .logo-title-lg h1 {
     font-size: 65pt;
 }
@@ -53,6 +57,9 @@ body > .container {
 }
 .nav-color:hover {
     color: #1ED760 !important;
+}
+.navbar-left {
+  margin-left: 15px;
 }
 .footer {
   position: absolute;
