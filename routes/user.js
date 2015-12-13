@@ -94,7 +94,17 @@ router.get('/profile', function(req, res) {
     var status = req.session.alertStatus; // use for proper pop-up dialog
 
     var authUrl = oauth2.getAuthUrl();
-
+    // var youtube_active;
+    // db.getServices(user.name, function(err, result){
+    //   if(err){
+    //     console.log(err);
+    //     youtube_active = false;
+    //   }
+    //   else{
+    //     console.log(result[0]);
+    //     youtube_active = typeof result[0];
+    //   }
+    // });
     delete req.session.alertStatus; // reset session variable
     res.locals.view_profile = true;
     res.render('profile', {
@@ -102,6 +112,8 @@ router.get('/profile', function(req, res) {
       message: message,
       status: status,
       youtube_url: authUrl
+      // youtube_active: youtube_active
+
     });
   }
 });

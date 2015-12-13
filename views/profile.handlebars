@@ -10,8 +10,9 @@
     YouTube
     <div class="authorize">
       <a href="{{youtube_url}}" class="btn btn-primary">Authorize</a>
-      <!-- Commenting out, will aim to implement for next release -->
+      {{!-- {{#if youtube_active}}       --}}
       <a href="/oauth2/deauthorize" class="btn btn-danger">Deauthorize</a>
+      {{!-- {{/if}} --}}
     </div>
   </li>
 </ul>
