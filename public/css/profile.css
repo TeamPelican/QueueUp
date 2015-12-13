@@ -21,13 +21,7 @@
   text-align: right;
 }
 
-img {
-  max-height: 70%;
+.col-md-2 img {
+  max-height: 100px;
   max-width: 70%;
 }
-/*#services .list-group-item {
-    height: 50px;
-    color: white;
-    border-color: black;
-    background-color: #343434;
-}*/

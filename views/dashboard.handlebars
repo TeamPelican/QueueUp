@@ -9,45 +9,45 @@
     <h3 class="panel-title">Your Queue</h3>
   </div>
 
-			<div id="content-panel" class="panel-heading">
-				<h3 class="panel-title">YouTube</h3>
+  <div id="content-panel" class="panel-heading">
+    <h3 class="panel-title">YouTube</h3>
 
-					<div class="panel-body">
-						<div id="Youtube" class="content carousel">
-						{{#each content}}
-						<div class="playable">
-							<div data-videoid="{{videoId}}"><img src={{thumbnails}}></img></div>
-							<div class="caption" style="color: black">
-								<h5>{{title}}</h5>
-							</div>
-						</div>
-						{{/each}}
-						</div>
-					</div>
-				</div>
+    <div class="panel-body">
+      <div id="Youtube" class="content carousel">
+        {{#each content}}
+        <div class="playable">
+          <div data-videoid="{{videoId}}"><img src={{thumbnails}}></img></div>
+          <div class="caption" style="color: black">
+            <h5>{{title}}</h5>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
 
-        <div id="content-panel" class="panel-heading">
-  				<h3 class="panel-title">Twitch</h3>
+  <div id="content-panel" class="panel-heading">
+    <h3 class="panel-title">Twitch</h3>
 
-  					<div class="panel-body">
-  						<div id="Twitch" class="content carousel">
-  						{{#each content}}
-  						<div class="playable">
-  							<div data-videoid="{{videoId}}"><img src={{thumbnails}}></img></div>
-  							<div class="caption" style="color: black">
-  								<h5>{{title}}</h5>
-  							</div>
-  						</div>
-  						{{/each}}
-  						</div>
-  					</div>
-  				</div>
+    <div class="panel-body">
+      <div id="Twitch" class="content carousel">
+        {{#each content}}
+        <div class="playable">
+          <div data-videoid="{{videoId}}"><img src={{thumbnails}}></img></div>
+          <div class="caption" style="color: black">
+            <h5>{{title}}</h5>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
 
 </div>
 
 
 {{#if message}}
-  <script>
-    showDialog("{{message}}"); // /javascripts/common.js
-  </script>
+<script>
+showDialog("{{message}}"); // /javascripts/common.js
+</script>
 {{/if}}
