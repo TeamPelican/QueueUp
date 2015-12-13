@@ -2,7 +2,6 @@ var express = require('express');
 var oauth2 = require('../lib/oauth2.js');
 var router = express.Router();
 
-// TODO: finish this
 router.get('/deauthorize', function(req,res){
   var user = req.session.user;
   //check for a logged in user in order to display content
