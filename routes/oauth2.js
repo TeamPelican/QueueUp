@@ -10,13 +10,15 @@ router.get('/deauthorize', function(req,res){
     req.flash('login', "Please log in to perform this action.");
     res.redirect('/user/login');
   } else {
-    oauth2.deauthorize(user, function(error, revokeUrl) {
+    oauth2.deauthorize(user, function(error, responseBody) {
       if (error) {
-        req.flash('profile', err);
+        req.flash('profile', error);
         res.redirect('/profile');
       } else {
-        res.redirect(revokeUrl);
+        req.flash('profile', responseBody);
+        res.redirect('/profile');
       }
+
     });
   }
 });
