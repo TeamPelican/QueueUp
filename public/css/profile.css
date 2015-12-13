@@ -1,26 +1,37 @@
 /* Dan's crying about the colors so you should probably let him take care of those... */
-#info {
-    padding: 10px;
-    color: white;
-    background-color: #343434;
-    border: solid 1px black;
-    border-radius: 4px;
-}
-#info .btn-primary {
-    color: black;
-    background-color: white;
-    border-color: white;
-}
 #services {
     margin-top: 10px;
     border-radius: 4px;
+    font-size:18pt;
 }
-#services .list-group-item {
+
+.panel {
+  color: black;
+}
+
+.panel-body .row {
+  padding: 10px;
+}
+
+.well {
+  margin: 10px;
+}
+
+.authorize {
+  vertical-align: middle;
+}
+
+.authorize {
+  text-align: center;
+}
+
+img {
+  max-height: 70%;
+  max-width: 70%;
+}
+/*#services .list-group-item {
     height: 50px;
     color: white;
     border-color: black;
     background-color: #343434;
-}
-.authorize {
-  float:right;
-}
+}*/
