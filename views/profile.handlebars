@@ -1,15 +1,17 @@
+<h2>Personal Information</h2>
 <div id="info">
   Username: {{username}}<br>
   <br>
   <button class="btn btn-primary" data-toggle="modal" data-target="#changePassForm">Change Password</button>
 </div>
+<h2>Services</h2>
 <ul id="services" class="list-group">
   <li class='list-group-item'>
     YouTube
     <div class="authorize">
       <a href="{{youtube_url}}" class="btn btn-primary">Authorize</a>
       <!-- Commenting out, will aim to implement for next release -->
-      <!--a href="/oauth2/deauthorize" class="btn btn-danger">Deauthorize</a-->
+      <a href="/oauth2/deauthorize" class="btn btn-danger">Deauthorize</a>
     </div>
   </li>
 </ul>

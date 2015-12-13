@@ -43,7 +43,8 @@ router.post('/changeAdmin', (req, res) => {
       db.changeAdmin(username, changeToAdmin, function(err) {
         if (err) {
           res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end('{"error",' + error + '}');
+          console.log(err);
+          res.end('{"error",' + err + '}');
         } else {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end('{"success":true}');
