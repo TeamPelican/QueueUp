@@ -1,10 +1,16 @@
 <h1>Team Portfolio</h1>
-
-<h2>Team Members</h2>
 <h2>Total: ({{members.length}})</h2>
-<ul>
-  {{#each members}}
-  <li><strong>{{this.fname}} {{this.lname}}</strong> - {{this.year}}</li>
-	  <ul><li>{{this.about}}</li></ul>
-  {{/each}}
-</ul>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title">Team Members</h2>
+  </div>
+  <div class="list-group">
+    {{#each members}}
+    <div class="list-group-item">
+      <h5 class="list-group-item-heading">{{this.fname}} {{this.lname}} - {{this.year}} - <span title="Try appending this to the '/team' url to see only this developer's info!" class="username">?user={{this.user}}</span></h5>
+      <p class="list-group-item-text">{{this.about}}</p>
+    </div>
+    {{/each}}
+  </div>
+</div>
+</div>

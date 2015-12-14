@@ -52,6 +52,7 @@ router.get('/team', (req, res) => {
     res.status(404);
     res.render('404');
   } else {
+    res.locals.view_team = true;
     res.render('team', {
       title: 'The QueueUp Team',
       members: result.data,
