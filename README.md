@@ -1,11 +1,13 @@
 # QueueUp
 #### Your streaming media dashboard. - CS326 Team Project
 
-## Final Project Submission Videos
+### [Final Project Document](https://goo.gl/HQXKXX)
 
-#####[Presentation](https://www.youtube.com/watch?v=mlJHSZNGRUU)
-#####[Source Code Tutorial](https://www.youtube.com/watch?v=-EoiXLaqoFs)
-#####[Web Application Demonstration](https://www.youtube.com/watch?v=PvM-ISkjmx8)
+### Final Project Submission Videos
+
+##### [Presentation](https://www.youtube.com/watch?v=mlJHSZNGRUU)
+##### [Source Code Tutorial](https://www.youtube.com/watch?v=-EoiXLaqoFs)
+##### [Web Application Demonstration](https://www.youtube.com/watch?v=PvM-ISkjmx8)
 
 ## Overview
 A problem that we, the members of Team Pelican, constantly face is that of not being able to decide what to watch online. With so many video streaming services at our disposal, it is easy to forget that one service might offer something much more appealing to you given your current mood. QueueUp aims to grab all of your streaming video content and assemble it into an easy to use streaming media dashboard to help you decide what to watch.
